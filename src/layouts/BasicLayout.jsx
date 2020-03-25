@@ -12,7 +12,7 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
-import logo from '../assets/logo.svg';
+import logo from '../../public/icons/icon-128x128.png';
 const noMatch = (
   <Result
     status={403}
@@ -37,27 +37,8 @@ const menuDataRender = menuList =>
 
 const defaultFooterDom = (
   <DefaultFooter
-    copyright="2019 蚂蚁金服体验技术部出品"
-    links={[
-      {
-        key: 'Ant Design Pro',
-        title: 'Ant Design Pro',
-        href: 'https://pro.ant.design',
-        blankTarget: true,
-      },
-      {
-        key: 'github',
-        title: <Icon type="github" />,
-        href: 'https://github.com/ant-design/ant-design-pro',
-        blankTarget: true,
-      },
-      {
-        key: 'Ant Design',
-        title: 'Ant Design',
-        href: 'https://ant.design',
-        blankTarget: true,
-      },
-    ]}
+    copyright="2020 Symbio"
+    links={[]}
   />
 );
 
@@ -68,7 +49,7 @@ const footerRender = () => {
 
   return (
     <>
-      {defaultFooterDom}
+      {/* {defaultFooterDom} */}
       <div
         style={{
           padding: '0px 24px 24px',
@@ -125,7 +106,7 @@ const BasicLayout = props => {
   };
   return (
     <ProLayout
-      logo={logo}
+      // logo={logo}
       menuHeaderRender={(logoDom, titleDom) => (
         <Link to="/">
           {logoDom}

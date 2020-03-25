@@ -22,7 +22,7 @@ const GlobalHeaderRight = props => {
 
   return (
     <div className={className}>
-      <HeaderSearch
+      {/* <HeaderSearch
         className={`${styles.action} ${styles.search}`}
         placeholder={formatMessage({
           id: 'component.globalHeader.search',
@@ -55,7 +55,7 @@ const GlobalHeaderRight = props => {
         >
           <Icon type="question-circle-o" />
         </a>
-      </Tooltip>
+      </Tooltip> */}
       <Avatar />
       {REACT_APP_ENV && <Tag color={ENVTagColor[REACT_APP_ENV]}>{REACT_APP_ENV}</Tag>}
       <SelectLang className={styles.action} />
