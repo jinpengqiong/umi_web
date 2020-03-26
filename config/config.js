@@ -8,7 +8,7 @@ const { pwa } = defaultSettings; // preview.pro.ant.design only do not use in yo
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
 
 const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION, REACT_APP_ENV } = process.env;
-const isAntDesignProPreview = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site';
+// const isAntDesignProPreview = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site';
 const plugins = [
   ['umi-plugin-antd-icon-config', {}],
   [
@@ -57,16 +57,16 @@ const plugins = [
   ],
 ];
 
-if (isAntDesignProPreview) {
-  // 针对 preview.pro.ant.design 的 GA 统计代码
-  plugins.push([
-    'umi-plugin-ga',
-    {
-      code: 'UA-72788897-6',
-    },
-  ]);
-  plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
-}
+// if (isAntDesignProPreview) {
+//   // 针对 preview.pro.ant.design 的 GA 统计代码
+//   plugins.push([
+//     'umi-plugin-ga',
+//     {
+//       code: 'UA-72788897-6',
+//     },
+//   ]);
+//   plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
+// }
 
 export default {
   plugins,
