@@ -75,6 +75,43 @@ export default {
       address: 'Sidney No. 1 Lake Park',
     },
   ],
+  'GET /api/getConfigTable': [
+    {
+      key: '1',
+      id: '1',
+      client_id: 'ChatApp',
+      client_key: 'MI_PUSH_SECRET_DEV',
+      client_value: ['nice', 'developer'],
+    },
+    {
+      key: '2',
+      id: '2',
+      client_id: 'ChatApp',
+      client_key: 'MI_PUSH_PACKAGENAME_DEV',
+      client_value: ['loser'],
+    },
+    {
+      key: '3',
+      id: '3',
+      client_id: 'ChatApp',
+      client_key: 'MI_PUSH_APPID_DEV',
+      client_value: ['cool', 'teacher'],
+    },
+    {
+      key: '4',
+      id: '4',
+      client_id: 'ChatApp',
+      client_key: 'MI_PUSH_APPID_DEV',
+      client_value: ['cool', 'teacher'],
+    },
+    {
+      key: '5',
+      id: '5',
+      client_id: 'ChatApp',
+      client_key: 'MI_PUSH_APPID_DEV',
+      client_value: ['cool', 'teacher'],
+    },
+  ],
   'POST /api/login/account': (req, res) => {
     const { password, userName, type } = req.body;
 

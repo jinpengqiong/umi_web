@@ -1,43 +1,5 @@
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
 
-const data = [
-  {
-    key: '1',
-    id: '1',
-    client_id: 'ChatApp',
-    client_key: 'MI_PUSH_SECRET_DEV',
-    client_value: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    id: '2',
-    client_id: 'ChatApp',
-    client_key: 'MI_PUSH_PACKAGENAME_DEV',
-    client_value: ['loser'],
-  },
-  {
-    key: '3',
-    id: '3',
-    client_id: 'ChatApp',
-    client_key: 'MI_PUSH_APPID_DEV',
-    client_value: ['cool', 'teacher'],
-  },
-  {
-    key: '4',
-    id: '4',
-    client_id: 'ChatApp',
-    client_key: 'MI_PUSH_APPID_DEV',
-    client_value: ['cool', 'teacher'],
-  },
-  {
-    key: '5',
-    id: '5',
-    client_id: 'ChatApp',
-    client_key: 'MI_PUSH_APPID_DEV',
-    client_value: ['cool', 'teacher'],
-  },
-];
-
 const EditableContext = React.createContext();
 
 class EditableCell extends React.Component {
@@ -88,7 +50,7 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data, editingKey: '' };
+    this.state = { data: null, editingKey: '' };
     this.columns = [
       {
         title: 'id',
@@ -138,6 +100,13 @@ class EditableTable extends React.Component {
         },
       },
     ];
+  }
+  componentDidMount(){
+    if(this.props){
+      this.setState({
+        data: this.props.tableData
+      });
+    }
   }
 
   isEditing = record => record.key === this.state.editingKey;
@@ -199,7 +168,7 @@ class EditableTable extends React.Component {
         <Table
           components={components}
           bordered
-          dataSource={this.state.data}
+          dataSource={this.props.tableData}
           columns={columns}
           rowClassName="editable-row"
           pagination={{

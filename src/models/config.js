@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
 import { router } from 'umi';
-import { fakeAccountLogin, getFakeCaptcha } from '@/services/login';
+import { getConfigTable } from '@/services/api';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 const Model = {
@@ -11,13 +11,20 @@ const Model = {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-
+        if (location.pathname === '/application/config') {
+          dispatch({ type: 'fetchTableData' });
+        }
       });
     },
   },
   effects: {
     *fetchTableData({ payload }, { call, put }) {
-      
+      const tableData = yield call(getConfigTable);
+      yield put(
+        {
+          type: 'updateState',
+          payload: { tableData } }
+        );
     },
   },
   reducers: {
