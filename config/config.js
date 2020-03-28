@@ -7,8 +7,8 @@ import webpackPlugin from './plugin.config';
 const { pwa } = defaultSettings; // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
 
-const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION, REACT_APP_ENV } = process.env;
-// const isAntDesignProPreview = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site';
+const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION, REACT_APP_ENV } = process.env; // const isAntDesignProPreview = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site';
+
 const plugins = [
   ['umi-plugin-antd-icon-config', {}],
   [
@@ -22,9 +22,9 @@ const plugins = [
         // default false
         enable: true,
         // default zh-CN
-        default: 'zh-CN',
+        default: 'en-US',
         // default true, when it is true, will use `navigator.language` overwrite default
-        baseNavigator: true,
+        baseNavigator: false,
       },
       dynamicImport: {
         loadingComponent: './components/PageLoading/index',
@@ -55,9 +55,7 @@ const plugins = [
       autoAddMenu: true,
     },
   ],
-];
-
-// if (isAntDesignProPreview) {
+]; // if (isAntDesignProPreview) {
 //   // 针对 preview.pro.ant.design 的 GA 统计代码
 //   plugins.push([
 //     'umi-plugin-ga',
@@ -98,29 +96,75 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
+              redirect: '/application/config',
             },
             {
-              path: '/welcome',
-              name: 'config',
-              icon: 'smile',
-              component: './Welcome',
-            },
-            {
-              path: '/admin',
-              name: 'admin',
+              path: '/application',
+              name: 'Application',
               icon: 'crown',
-              component: './Admin',
+              component: './application/config',
               authority: ['admin'],
               routes: [
                 {
-                  path: '/admin/sub-page',
-                  name: 'sub-page',
-                  icon: 'smile',
-                  component: './Welcome',
+                  path: '/application/config',
+                  name: 'Config',
+                  icon: 'crown',
+                  component: './application/config',
                   authority: ['admin'],
                 },
               ],
+            },
+            {
+              path: '/push_services',
+              name: 'Push Services',
+              icon: 'crown',
+              component: './push_service/Apple_APNS',
+              authority: ['admin'],
+              routes: [
+                {
+                  path: '/push_services/apple_apns',
+                  name: 'Apple APNS',
+                  icon: 'crown',
+                  component: './push_service/Apple_APNS',
+                  authority: ['admin'],
+                },
+                {
+                  name: 'Google FCM',
+                  icon: 'crown',
+                  path: '/push_services/google_fcm',
+                  component: './push_service/google_fcm',
+                },
+                {
+                  name: 'Huawei HMS',
+                  icon: 'crown',
+                  path: '/push_services/huawei_hms',
+                  component: './push_service/huawei_hms',
+                },
+                {
+                  name: 'Xiaomi Push',
+                  icon: 'crown',
+                  path: '/push_services/xiaomi_push',
+                  component: './push_service/Xiaomi_Push',
+                },
+                {
+                  name: 'OPOP Push',
+                  icon: 'crown',
+                  path: '/push_services/opop_push',
+                  component: './push_service/OPOP_Push',
+                },
+                {
+                  name: 'Vivo Push',
+                  icon: 'crown',
+                  path: '/push_services/vivo_push',
+                  component: './push_service/Vivo_Push',
+                },
+              ],
+            },
+            {
+              name: 'Push Message',
+              icon: 'crown',
+              path: '/push_message',
+              component: './Push_Message',
             },
             {
               component: './404',
@@ -182,3 +226,4 @@ export default {
   proxy: proxy[REACT_APP_ENV || 'dev'],
   chainWebpack: webpackPlugin,
 };
+
