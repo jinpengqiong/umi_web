@@ -81,13 +81,16 @@ class EditableTable extends React.Component {
           const editable = this.isEditing(record);
           return editable ? (
             <span>
-              <EditableContext.Consumer>
-                {form => (
-                  <a onClick={() => this.save(form, record.key)} style={{ marginRight: 8 }}>
-                    Save
-                  </a>
-                )}
-              </EditableContext.Consumer>
+                <EditableContext.Consumer>
+                  {form => (
+                    <Popconfirm title="Sure to save?" onConfirm={() => this.save(form, record.key)}>
+                      <a style={{ marginRight: 8 }}>
+                      Save
+                    </a>
+                    </Popconfirm>
+                  )}
+                </EditableContext.Consumer>
+
               <Popconfirm title="Sure to cancel?" onConfirm={() => this.cancel(record.key)}>
                 <a>Cancel</a>
               </Popconfirm>
@@ -101,10 +104,10 @@ class EditableTable extends React.Component {
       },
     ];
   }
-  componentDidMount(){
-    if(this.props){
+  componentDidMount() {
+    if (this.props) {
       this.setState({
-        data: this.props.tableData
+        data: this.props.tableData,
       });
     }
   }
