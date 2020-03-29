@@ -1,5 +1,6 @@
 export default {
   'menu.config': 'Config',
+  'menu.application': 'Application',
   'menu.more-blocks': 'More Blocks',
   'menu.home': 'Home',
   'menu.admin': 'Admin',

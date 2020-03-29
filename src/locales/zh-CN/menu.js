@@ -1,5 +1,6 @@
 export default {
   'menu.config': '设置',
+  'menu.application': '应用',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',
   'menu.admin': '管理页',
