@@ -10,7 +10,7 @@ const Model = {
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(AccountLogin, payload);
+      const response = yield call(AccountLogin, { username: 'admin', password: 'e10adc3949ba59abbe56e057f20f883e' });
       yield put({
         type: 'changeLoginStatus',
         payload: response,

@@ -165,6 +165,7 @@ export default {
               icon: 'crown',
               path: '/push_message',
               component: './Push_Message',
+              authority: ['admin'],
             },
             {
               component: './404',
