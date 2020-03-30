@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
 import { router } from 'umi';
-import { fakeAccountLogin, getFakeCaptcha } from '@/services/login';
+import { AccountLogin, getFakeCaptcha } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 const Model = {
@@ -10,7 +10,7 @@ const Model = {
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      const response = yield call(AccountLogin, payload);
       yield put({
         type: 'changeLoginStatus',
         payload: response,
