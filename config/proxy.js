@@ -7,7 +7,21 @@
  */
 export default {
   dev: {
-    '/api/': {
+    '/api': {
+      target: 'http://10.147.20.180:8084',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api': '',
+      },
+    },
+    '/permission': {
+      target: 'http://10.147.20.180:8084',
+      changeOrigin: true,
+      pathRewrite: {
+        '^': '',
+      },
+    },
+    '/clientAppConfig/': {
       target: 'http://10.147.20.180:8084',
       changeOrigin: true,
       pathRewrite: {
@@ -17,7 +31,7 @@ export default {
   },
   test: {
     '/api/': {
-      target: 'https://preview.pro.ant.design',
+      target: 'http://10.147.20.180:8084',
       changeOrigin: true,
       pathRewrite: {
         '^': '',

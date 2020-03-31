@@ -92,7 +92,7 @@ export default {
         {
           path: '/',
           component: '../layouts/BasicLayout',
-          authority: ['admin', 'user'],
+          // authority: ['admin', 'user'],
           routes: [
             {
               path: '/',
@@ -165,7 +165,7 @@ export default {
               icon: 'crown',
               path: '/push_message',
               component: './Push_Message',
-              authority: ['admin'],
+              // authority: ['admin'],
             },
             {
               component: './404',

@@ -19,7 +19,7 @@ const ConfigPage =  props => {
       >
         {/* <Spin spinning={loading} size="large" /> */}
         <div>
-          <EditableFormTable tableData={tableData} />
+          <EditableFormTable tableData={tableData.code === '200'? tableData.data: null} />
         </div>
       </div>
     </PageHeaderWrapper>

@@ -59,18 +59,18 @@ class EditableTable extends React.Component {
       },
       {
         title: 'Client ID',
-        dataIndex: 'client_id',
-        key: 'client_id',
+        dataIndex: 'clientId',
+        key: 'clientId',
       },
       {
         title: 'Client Key',
-        dataIndex: 'client_key',
-        key: 'client_key',
+        dataIndex: 'clientKey',
+        key: 'clientKey',
       },
       {
         title: 'Client Value',
-        key: 'client_value',
-        dataIndex: 'client_value',
+        key: 'clientValue',
+        dataIndex: 'clientValue',
         editable: true,
       },
       {
@@ -81,15 +81,13 @@ class EditableTable extends React.Component {
           const editable = this.isEditing(record);
           return editable ? (
             <span>
-                <EditableContext.Consumer>
-                  {form => (
-                    <Popconfirm title="Sure to save?" onConfirm={() => this.save(form, record.key)}>
-                      <a style={{ marginRight: 8 }}>
-                      Save
-                    </a>
-                    </Popconfirm>
-                  )}
-                </EditableContext.Consumer>
+              <EditableContext.Consumer>
+                {form => (
+                  <Popconfirm title="Sure to save?" onConfirm={() => this.save(form, record.key)}>
+                    <a style={{ marginRight: 8 }}>Save</a>
+                  </Popconfirm>
+                )}
+              </EditableContext.Consumer>
 
               <Popconfirm title="Sure to cancel?" onConfirm={() => this.cancel(record.key)}>
                 <a>Cancel</a>

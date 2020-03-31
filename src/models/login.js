@@ -1,29 +1,43 @@
 import { stringify } from 'querystring';
 import { router } from 'umi';
-import { AccountLogin, getFakeCaptcha } from '@/services/login';
+import { AccountLogin, getFakeCaptcha, fakeAccountLogin } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 const Model = {
   namespace: 'login',
   state: {
-    status: undefined,
+    passKey: '',
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(AccountLogin, { username: 'admin', password: 'e10adc3949ba59abbe56e057f20f883e' });
+      const response = yield call(AccountLogin, {
+        username: 'admin',
+        password: 'e10adc3949ba59abbe56e057f20f883e',
+      });
+      // const response = yield call(fakeAccountLogin, payload);
+      console.log('response', response);
+      response.currentAuthority = 'admin';
       yield put({
         type: 'changeLoginStatus',
         payload: response,
       }); // Login successfully
+      yield put({
+        type: 'user/fetchCurrent',
+        payload: {
+          name: 'Admin',
+          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          userid: '00000001',
+        },
+      }); // Login successfully
 
-      if (response.status === 'ok') {
+      if (response.code === '200') {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params;
-
+        console.log('redirect', redirect);
         if (redirect) {
           const redirectUrlParams = new URL(redirect);
-
+          console.log('redirectUrlParams', redirectUrlParams);
           if (redirectUrlParams.origin === urlParams.origin) {
             redirect = redirect.substr(urlParams.origin.length);
 
@@ -60,7 +74,7 @@ const Model = {
   reducers: {
     changeLoginStatus(state, { payload }) {
       setAuthority(payload.currentAuthority);
-      return { ...state, status: payload.status, type: payload.type };
+      return { ...state, passKey: payload.passKey };
     },
   },
 };
