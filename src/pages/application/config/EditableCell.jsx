@@ -83,13 +83,13 @@ class EditableTable extends React.Component {
             <span>
               <EditableContext.Consumer>
                 {form => (
-                  <Popconfirm title="Sure to save?" onConfirm={() => this.save(form, record.key)}>
+                  <Popconfirm title="Sure to save?" onConfirm={() => this.save(form, record.id)}>
                     <a style={{ marginRight: 8 }}>Save</a>
                   </Popconfirm>
                 )}
               </EditableContext.Consumer>
 
-              <Popconfirm title="Sure to cancel?" onConfirm={() => this.cancel(record.key)}>
+              <Popconfirm title="Sure to cancel?" onConfirm={() => this.cancel(record.id)}>
                 <a>Cancel</a>
               </Popconfirm>
             </span>
@@ -116,13 +116,14 @@ class EditableTable extends React.Component {
     this.setState({ editingKey: '' });
   };
 
-  save(form, key) {
+  save = (form, id) => {
     form.validateFields((error, row) => {
+      console.log('row :', row);
       if (error) {
         return;
       }
       const newData = [...this.state.data];
-      const index = newData.findIndex(item => key === item.key);
+      const index = newData.findIndex(item => id === item.id);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, {
@@ -134,6 +135,7 @@ class EditableTable extends React.Component {
         newData.push(row);
         this.setState({ data: newData, editingKey: '' });
       }
+      this.props.dispatch({ type: 'config/updateTableData', payload: { clientValue : '1111', id } });
     });
   }
 

@@ -18,23 +18,26 @@ const Model = {
     },
   },
   effects: {
-    *fetchTableData({ payload }, { call, put, select }) {
-      const { passKey } = yield select(_ => _.login)
+    *fetchTableData(_, { call, put, select }) {
+      const { passKey } = yield select(_ => _.login);
       const tableData = yield call(getConfigTable, { passKey });
-      yield put(
-        {
-          type: 'updateState',
-          payload: { tableData: tableData } }
-        );
+      yield put({
+        type: 'updateState',
+        payload: { tableData: tableData },
+      });
     },
     *updateTableData({ payload }, { call, put, select }) {
-      const { passKey } = yield select(_ => _.login)
-      const tableData = yield call(updateConfigTable, { passKey });
-      yield put(
-        {
-          type: 'updateState',
-          payload: { tableData: tableData } }
-        );
+      const { passKey } = yield select(_ => _.login);
+      const response = yield call(updateConfigTable, {
+        passKey,
+        id: payload.id,
+        clientValue: payload.clientValue,
+      });
+      if (response.code === '200') {
+        yield put({
+          type: 'fetchTableData',
+        });
+      }
     },
   },
   reducers: {
