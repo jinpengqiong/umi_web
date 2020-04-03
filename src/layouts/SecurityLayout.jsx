@@ -14,12 +14,13 @@ class SecurityLayout extends React.Component {
       isReady: true,
     });
     const { dispatch } = this.props;
-
-    // if (dispatch) {
-    //   dispatch({
-    //     type: 'user/fetchCurrent',
-    //   });
-    // }
+    const userInfo = sessionStorage.getItem('user');
+    if (dispatch) {
+      dispatch({
+        type: 'user/fetchCurrent',
+        payload: JSON.parse(userInfo)
+      });
+    }
   }
 
   render() {

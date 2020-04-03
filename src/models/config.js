@@ -12,6 +12,7 @@ const Model = {
     setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/application/config') {
+          console.log('object')
           dispatch({ type: 'fetchTableData' });
         }
       });

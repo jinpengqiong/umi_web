@@ -21,16 +21,17 @@ const Model = {
         type: 'changeLoginStatus',
         payload: response,
       }); // Login successfully
-      yield put({
-        type: 'user/fetchCurrent',
-        payload: {
+      if (response.code === '200') {
+        const userInfo = {
           name: 'Admin',
           avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
           userid: '00000001',
-        },
-      }); // Login successfully
-
-      if (response.code === '200') {
+        };
+        yield put({
+          type: 'user/fetchCurrent',
+          payload: userInfo,
+        }); // Login successfully
+        sessionStorage.setItem('user', JSON.stringify(userInfo));
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params;
