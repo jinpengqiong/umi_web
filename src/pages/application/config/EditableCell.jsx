@@ -83,13 +83,13 @@ class EditableTable extends React.Component {
             <span>
               <EditableContext.Consumer>
                 {form => (
-                  <Popconfirm title="Sure to save?" onConfirm={() => this.save(form, record.id)}>
+                  <Popconfirm title="Sure to save?" onConfirm={() => this.save(form, record.key)}>
                     <a style={{ marginRight: 8 }}>Save</a>
                   </Popconfirm>
                 )}
               </EditableContext.Consumer>
 
-              <Popconfirm title="Sure to cancel?" onConfirm={() => this.cancel(record.id)}>
+              <Popconfirm title="Sure to cancel?" onConfirm={() => this.cancel(record.key)}>
                 <a>Cancel</a>
               </Popconfirm>
             </span>
@@ -104,8 +104,15 @@ class EditableTable extends React.Component {
   }
   componentDidMount() {
     if (this.props) {
+      const data = this.props.tableData
+        ? this.props.tableData.map((item, i) => {
+            item.key = i;
+            return item
+          })
+        : null;
+      console.log('data :', data);
       this.setState({
-        data: this.props.tableData,
+        data,
       });
     }
   }
@@ -116,14 +123,15 @@ class EditableTable extends React.Component {
     this.setState({ editingKey: '' });
   };
 
-  save = (form, id) => {
+  save = (form, key) => {
+    console.log('key :', key);
     form.validateFields((error, row) => {
-      console.log('row :', row);
       if (error) {
         return;
       }
       const newData = [...this.state.data];
-      const index = newData.findIndex(item => id === item.id);
+      console.log('newData :', newData);
+      const index = newData.findIndex(item => key === item.key);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, {
@@ -135,9 +143,16 @@ class EditableTable extends React.Component {
         newData.push(row);
         this.setState({ data: newData, editingKey: '' });
       }
-      this.props.dispatch({ type: 'config/updateTableData', payload: { clientValue : '1111', id } });
+      console.log('newData :', newData);
+      this.props.dispatch({
+        type: 'config/updateTableData',
+        payload: {
+          clientValue: newData[key].clientValue,
+          id: newData[key].id
+        },
+      });
     });
-  }
+  };
 
   edit(key) {
     this.setState({ editingKey: key });
@@ -171,7 +186,7 @@ class EditableTable extends React.Component {
         <Table
           components={components}
           bordered
-          dataSource={this.props.tableData}
+          dataSource={this.state.data}
           columns={columns}
           rowClassName="editable-row"
           pagination={{

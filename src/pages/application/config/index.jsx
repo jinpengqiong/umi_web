@@ -9,6 +9,10 @@ import styles from './index.less';
 const ConfigPage =  props => {
   console.log('props', props);
   const { tableData, dispatch } = props;
+  const theData =
+    tableData && tableData.code === '200'
+      ? tableData.data
+      : null;
   return (
     <PageHeaderWrapper className={styles.main}>
       <div
@@ -19,10 +23,7 @@ const ConfigPage =  props => {
       >
         {/* <Spin spinning={loading} size="large" /> */}
         <div>
-          <EditableFormTable
-            tableData={tableData.code === '200' ? tableData.data : null}
-            dispatch={dispatch}
-          />
+          <EditableFormTable tableData={theData} dispatch={dispatch} />
         </div>
       </div>
     </PageHeaderWrapper>

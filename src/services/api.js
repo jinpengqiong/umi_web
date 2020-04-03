@@ -7,7 +7,7 @@ export async function getConfigTable(params) {
          });
        }
 export async function updateConfigTable(params) {
-         return request('/clientAppConfig/getConfig', {
+         return request('/clientAppConfig/updateConfig', {
            method: 'POST',
            params,
          });
