@@ -48,8 +48,8 @@ class PushMessage extends Component {
             <Row>
               <Col span={4} offset={5}>
                 <Radio.Group onChange={this.onRadioChange} value={this.state.radioValue}>
-                  <Radio value={1}>Visitor</Radio>
-                  <Radio value={2}>Authorized</Radio>
+                  <Radio value={1}>Visitor Mode</Radio>
+                  <Radio value={2}>User Mode</Radio>
                 </Radio.Group>
               </Col>
             </Row>
@@ -83,12 +83,17 @@ class PushMessage extends Component {
                             onChange={this.handleSelectChange}
                           >
                             <Option value="default">Default</Option>
-                            <Option value="card">Card</Option>
-                            <Option value="big_text">Big Text</Option>
+                            <Option value="card">Big Image Card</Option>
+                            <Option value="large_text">Large Text</Option>
                           </Select>,
                         )}
                       </Form.Item>
-                      <Form.Item label="Push Message">
+                      <Form.Item label="Title">
+                        {getFieldDecorator('push_message', {
+                          // rules: [{ required: true, message: 'Please select your gender!' }],
+                        })(<Input />)}
+                      </Form.Item>
+                      <Form.Item label="Content">
                         {getFieldDecorator('push_message', {
                           // rules: [{ required: true, message: 'Please select your gender!' }],
                         })(<Input />)}
@@ -96,7 +101,7 @@ class PushMessage extends Component {
                     </React.Fragment>
                   ) : (
                     <React.Fragment>
-                      <Form.Item label="User Recipients Provisioning">
+                      <Form.Item label="User Recipients">
                         {getFieldDecorator('user', {
                           // rules: [{ required: true, message: 'Please input your note!' }],
                         })(
@@ -136,12 +141,17 @@ class PushMessage extends Component {
                             onChange={this.handleSelectChange}
                           >
                             <Option value="default">Default</Option>
-                            <Option value="card">Card</Option>
-                            <Option value="big_text">Big Text</Option>
+                            <Option value="card">Big Image Card</Option>
+                            <Option value="large_text">Large Text</Option>
                           </Select>,
                         )}
                       </Form.Item>
-                      <Form.Item label="Push Message">
+                      <Form.Item label="Title">
+                        {getFieldDecorator('push_message', {
+                          // rules: [{ required: true, message: 'Please select your gender!' }],
+                        })(<Input />)}
+                      </Form.Item>
+                      <Form.Item label="Content">
                         {getFieldDecorator('push_message', {
                           // rules: [{ required: true, message: 'Please select your gender!' }],
                         })(<Input />)}

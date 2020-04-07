@@ -100,14 +100,14 @@ export default {
             },
             {
               path: '/application',
-              name: 'Application',
+              name: 'Tenants Mode',
               icon: 'crown',
               component: './application/config',
               authority: ['admin'],
               routes: [
                 {
                   path: '/application/config',
-                  name: 'Config',
+                  name: 'Clients',
                   icon: 'crown',
                   component: './application/config',
                   authority: ['admin'],
@@ -116,38 +116,38 @@ export default {
             },
             {
               path: '/push_services',
-              name: 'Push Services',
+              name: 'Push Vendors',
               icon: 'crown',
               component: './push_service/Apple_APNS',
               authority: ['admin'],
               routes: [
                 {
                   path: '/push_services/apple_apns',
-                  name: 'Apple APNS',
+                  name: 'APNS',
                   icon: 'crown',
                   component: './push_service/Apple_APNS',
                   authority: ['admin'],
                 },
                 {
-                  name: 'Google FCM',
+                  name: 'FCM',
                   icon: 'crown',
                   path: '/push_services/google_fcm',
                   component: './push_service/google_fcm',
                 },
                 {
-                  name: 'Huawei HMS',
+                  name: 'HuaWei HMS',
                   icon: 'crown',
                   path: '/push_services/huawei_hms',
                   component: './push_service/huawei_hms',
                 },
                 {
-                  name: 'Xiaomi Push',
+                  name: 'XiaoMi Push',
                   icon: 'crown',
                   path: '/push_services/xiaomi_push',
                   component: './push_service/Xiaomi_Push',
                 },
                 {
-                  name: 'OPOP Push',
+                  name: 'OPPO Push',
                   icon: 'crown',
                   path: '/push_services/opop_push',
                   component: './push_service/OPOP_Push',
@@ -161,7 +161,7 @@ export default {
               ],
             },
             {
-              name: 'Push Message',
+              name: 'Messaging',
               icon: 'crown',
               path: '/push_message',
               component: './Push_Message',
