@@ -94,29 +94,29 @@ class Login extends Component {
               )}
             <UserName
               name="userName"
-              placeholder={`${formatMessage({
-                id: 'user-login.login.userName',
-              })}: admin or user`}
+              // placeholder={`${formatMessage({
+              //   id: 'user-login.login.userName',
+              // })}: admin or user`}
               rules={[
                 {
                   required: true,
-                  message: formatMessage({
-                    id: 'user-login.userName.required',
-                  }),
+                  // message: formatMessage({
+                  //   id: 'user-login.userName.required',
+                  // }),
                 },
               ]}
             />
             <Password
               name="password"
-              placeholder={`${formatMessage({
-                id: 'user-login.login.password',
-              })}: ant.design`}
+              // placeholder={`${formatMessage({
+              //   id: 'user-login.login.password',
+              // })}: ant.design`}
               rules={[
                 {
                   required: true,
-                  message: formatMessage({
-                    id: 'user-login.password.required',
-                  }),
+                  // message: formatMessage({
+                  //   id: 'user-login.password.required',
+                  // }),
                 },
               ]}
               onPressEnter={e => {
