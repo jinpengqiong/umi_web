@@ -14,9 +14,12 @@ class AvatarDropdown extends React.Component {
       const { dispatch } = this.props;
 
       if (dispatch) {
+        sessionStorage.clear()
+        localStorage.clear()
         dispatch({
           type: 'login/logout',
         });
+
       }
 
       return;
