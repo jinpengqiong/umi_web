@@ -14,7 +14,7 @@ class SecurityLayout extends React.Component {
       isReady: true,
     });
     const { dispatch } = this.props;
-    const userInfo = sessionStorage.getItem('user');
+    const userInfo = sessionStorage.getItem('userInfo');
     if (dispatch) {
       dispatch({
         type: 'user/fetchCurrent',

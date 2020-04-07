@@ -3,6 +3,8 @@ import { router } from 'umi';
 import { getConfigTable, updateConfigTable } from '@/services/api';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
+const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+
 const Model = {
   namespace: 'config',
   state: {
@@ -12,7 +14,6 @@ const Model = {
     setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/application/config') {
-          console.log('object')
           dispatch({ type: 'fetchTableData' });
         }
       });
@@ -20,17 +21,15 @@ const Model = {
   },
   effects: {
     *fetchTableData(_, { call, put, select }) {
-      const { passKey } = yield select(_ => _.login);
-      const tableData = yield call(getConfigTable, { passKey });
+      const tableData = yield call(getConfigTable, { passKey: userInfo.passKey });
       yield put({
         type: 'updateState',
         payload: { tableData: tableData },
       });
     },
     *updateTableData({ payload }, { call, put, select }) {
-      const { passKey } = yield select(_ => _.login);
       const response = yield call(updateConfigTable, {
-        passKey,
+        passKey: userInfo.passKey,
         id: payload.id,
         clientValue: payload.clientValue,
       });

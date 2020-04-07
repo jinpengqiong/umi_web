@@ -26,12 +26,13 @@ const Model = {
           name: 'Admin',
           avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
           userid: '00000001',
+          passKey: response.passKey,
         };
         yield put({
           type: 'user/fetchCurrent',
           payload: userInfo,
         }); // Login successfully
-        sessionStorage.setItem('user', JSON.stringify(userInfo));
+        sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params;
