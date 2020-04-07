@@ -19,6 +19,7 @@ class Login extends Component {
     });
   };
   handleSubmit = (err, values) => {
+    console.log('value', values);
     const { type } = this.state;
 
     if (!err) {

@@ -13,8 +13,11 @@ const Model = {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/application/config') {
-          console.log('location', location.pathname);
+        console.log('location', location.pathname);
+        if (
+          location.pathname === '/' ||
+          location.pathname === '/application/config'
+        ) {
           dispatch({ type: 'fetchTableData' });
         }
       });

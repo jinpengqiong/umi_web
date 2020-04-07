@@ -3,6 +3,7 @@ import { router } from 'umi';
 import { AccountLogin, getFakeCaptcha, fakeAccountLogin } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
+import SparkMD5 from 'spark-md5';
 const Model = {
   namespace: 'login',
   state: {
@@ -11,8 +12,8 @@ const Model = {
   effects: {
     *login({ payload }, { call, put }) {
       const response = yield call(AccountLogin, {
-        username: 'admin',
-        password: 'e10adc3949ba59abbe56e057f20f883e',
+        username: payload.userName,
+        password: SparkMD5.hash(payload.password),
       });
       // const response = yield call(fakeAccountLogin, payload);
       console.log('response', response);
