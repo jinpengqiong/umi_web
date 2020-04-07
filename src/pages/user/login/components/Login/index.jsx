@@ -103,7 +103,6 @@ class Login extends Component {
 
   render() {
     const { className, children } = this.props;
-    console.log('children', children);
     const { type, tabs = [] } = this.state;
     const TabChildren = [];
     const otherChildren = [];
