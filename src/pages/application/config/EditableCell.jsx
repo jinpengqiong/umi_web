@@ -107,10 +107,10 @@ class EditableTable extends React.Component {
       const data = this.props.tableData
         ? this.props.tableData.map((item, i) => {
             item.key = i;
-            return item
+            return item;
           })
         : null;
-      console.log('data :', data);
+
       this.setState({
         data,
       });
@@ -124,13 +124,13 @@ class EditableTable extends React.Component {
   };
 
   save = (form, key) => {
-    console.log('key :', key);
+
     form.validateFields((error, row) => {
       if (error) {
         return;
       }
       const newData = [...this.state.data];
-      console.log('newData :', newData);
+
       const index = newData.findIndex(item => key === item.key);
       if (index > -1) {
         const item = newData[index];
@@ -143,12 +143,12 @@ class EditableTable extends React.Component {
         newData.push(row);
         this.setState({ data: newData, editingKey: '' });
       }
-      console.log('newData :', newData);
+
       this.props.dispatch({
         type: 'config/updateTableData',
         payload: {
           clientValue: newData[key].clientValue,
-          id: newData[key].id
+          id: newData[key].id,
         },
       });
     });

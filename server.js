@@ -3,7 +3,7 @@ const compression = require('compression');
 const express = require('express');
 const app = express();
 const proxy = require('http-proxy-middleware');
-const indexRouter = require('./server/index');
+const indexRouter = require('./src/services/router');
 // const config = require('./server/config');
 app.use(compression());
 

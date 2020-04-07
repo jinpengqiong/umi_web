@@ -14,10 +14,8 @@ const Model = {
     setup({ dispatch, history }) {
       history.listen(location => {
         console.log('location', location.pathname);
-        if (
-          location.pathname === '/' ||
-          location.pathname === '/application/config'
-        ) {
+        if (location.pathname === '/' || location.pathname === '/application/config') {
+          console.log('1111111')
           dispatch({ type: 'fetchTableData' });
         }
       });
