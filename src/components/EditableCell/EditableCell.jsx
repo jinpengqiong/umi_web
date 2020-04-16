@@ -50,7 +50,7 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: null, editingKey: '' };
+    this.state = { data: null, editingKey: '',location:'' };
     this.columns = [
       {
         title: 'id',
@@ -113,6 +113,15 @@ class EditableTable extends React.Component {
 
       this.setState({
         data,
+        location:this.props.location,
+      });
+    }
+  }
+  componentWillReceiveProps(nextProps){
+    if(nextProps.tableData !== this.state.tableData){
+      this.setState({
+        data: nextProps.tableData,
+        location: nextProps.location,
       });
     }
   }
@@ -149,6 +158,7 @@ class EditableTable extends React.Component {
         payload: {
           clientValue: newData[key].clientValue,
           id: newData[key].id,
+          location:this.props.location
         },
       });
     });

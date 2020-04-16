@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { EditableFormTable } from './EditableCell'
+import { EditableFormTable } from '../../../components/EditableCell/EditableCell'
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import { Table, Divider, Tag, Spin } from 'antd';
 import styles from './index.less';
@@ -9,10 +9,6 @@ import styles from './index.less';
 const ConfigPage =  props => {
   console.log('props', props);
   const { tableData, dispatch } = props;
-  const theData =
-    tableData && tableData.code === '200'
-      ? tableData.data
-      : null;
   return (
     <PageHeaderWrapper className={styles.main}>
       <div
@@ -21,9 +17,8 @@ const ConfigPage =  props => {
           paddingTop: 20,
         }}
       >
-        {/* <Spin spinning={loading} size="large" /> */}
         <div>
-          <EditableFormTable tableData={theData} dispatch={dispatch} />
+          <EditableFormTable tableData={tableData} dispatch={dispatch} location={props.location} />
         </div>
       </div>
     </PageHeaderWrapper>

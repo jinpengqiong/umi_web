@@ -1,25 +1,22 @@
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import React, { useState, useEffect } from 'react';
-import { Spin } from 'antd';
+import React from 'react';
+import { connect } from 'dva';
+import { EditableFormTable } from '../../../components/EditableCell/EditableCell';
 import styles from './index.less';
 
-export default () => {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
+const XIAOMIPush = props => {
+  const { tableData, dispatch } = props;
   return (
-    <PageHeaderWrapper content="这是一个新页面，从这里进行开发！" className={styles.main}>
+    <PageHeaderWrapper className={styles.main}>
       <div
         style={{
-          paddingTop: 100,
+          paddingTop: 20,
           textAlign: 'center',
         }}
       >
-        <Spin spinning={loading} size="large" />
+        <EditableFormTable tableData={tableData} dispatch={dispatch} location={props.location} />
       </div>
     </PageHeaderWrapper>
   );
 };
+export default connect(({ config }) => ({ ...config }))(XIAOMIPush);
