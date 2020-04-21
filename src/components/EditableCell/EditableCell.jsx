@@ -77,6 +77,7 @@ class EditableTable extends React.Component {
         title: 'operation',
         dataIndex: 'operation',
         render: (text, record) => {
+          console.log('record', record);
           const { editingKey } = this.state;
           const editable = this.isEditing(record);
           return editable ? (
@@ -119,8 +120,13 @@ class EditableTable extends React.Component {
   }
   componentWillReceiveProps(nextProps){
     if(nextProps.tableData !== this.state.tableData){
+      const data = nextProps.tableData? nextProps.tableData.map(
+        (item, index) => {
+        item.key = index;
+        return item
+      }) : null
       this.setState({
-        data: nextProps.tableData,
+        data,
         location: nextProps.location,
       });
     }
@@ -165,6 +171,7 @@ class EditableTable extends React.Component {
   };
 
   edit(key) {
+    console.log('key', key)
     this.setState({ editingKey: key });
   }
 
