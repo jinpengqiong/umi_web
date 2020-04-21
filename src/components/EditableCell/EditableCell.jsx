@@ -77,7 +77,7 @@ class EditableTable extends React.Component {
         title: 'operation',
         dataIndex: 'operation',
         render: (text, record) => {
-          console.log('record', record);
+
           const { editingKey } = this.state;
           const editable = this.isEditing(record);
           return editable ? (
@@ -171,7 +171,7 @@ class EditableTable extends React.Component {
   };
 
   edit(key) {
-    console.log('key', key)
+
     this.setState({ editingKey: key });
   }
 
