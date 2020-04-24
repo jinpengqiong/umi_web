@@ -1,8 +1,9 @@
+import React, {Component} from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
 
 const EditableContext = React.createContext();
 
-class EditableCell extends React.Component {
+class EditableCell extends Component {
   getInput = () => {
     if (this.props.inputType === 'number') {
       return <InputNumber />;
@@ -47,7 +48,7 @@ class EditableCell extends React.Component {
   }
 }
 
-class EditableTable extends React.Component {
+class EditableTable extends Component {
   constructor(props) {
     super(props);
     this.state = { data: null, editingKey: '',location:'' };
@@ -103,6 +104,7 @@ class EditableTable extends React.Component {
       },
     ];
   }
+
   componentDidMount() {
     if (this.props) {
       const data = this.props.tableData
@@ -118,6 +120,7 @@ class EditableTable extends React.Component {
       });
     }
   }
+
   componentWillReceiveProps(nextProps){
     if(nextProps.tableData !== this.state.tableData){
       const data = nextProps.tableData? nextProps.tableData.map(
@@ -206,9 +209,7 @@ class EditableTable extends React.Component {
           dataSource={this.state.data}
           columns={columns}
           rowClassName="editable-row"
-          pagination={{
-            onChange: this.cancel,
-          }}
+          pagination={false}
         />
       </EditableContext.Provider>
     );

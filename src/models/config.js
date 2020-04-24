@@ -1,14 +1,16 @@
 import { stringify } from 'querystring';
 import { router } from 'umi';
-import { getConfigTable, updateConfigTable } from '@/services/api';
+import { getConfigTable, updateConfigTable, getClientList } from '@/services/api';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
-const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+
+const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
 const Model = {
   namespace: 'config',
   state: {
     tableData: null,
+    clientList: [],
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -19,6 +21,17 @@ const Model = {
     },
   },
   effects: {
+    *fetchClientList(_, { call, put, select }) {
+      const resp = yield call(getClientList, {
+        passKey: userInfo.passKey,
+      });
+      if (resp.code === '200') {
+        yield put({
+          type: 'updateState',
+          payload: { clientList: resp.data },
+        });
+      }
+    },
     *fetchTableData({ payload }, { call, put, select }) {
       console.log('userInfo', userInfo);
       const tableData = yield call(getConfigTable, {
@@ -49,7 +62,10 @@ const Model = {
     *pathHandler({ payload }, { call, put, select }) {
       switch (payload.location.pathname) {
         case '/application/config':
-          yield put({ type: 'fetchTableData', payload: { vendorType: 11 } });
+          yield put({ type: 'fetchClientList' });
+          break;
+        case '/push_message':
+          yield put({ type: 'fetchClientList' });
           break;
         case '/push_services/apple_apns':
           yield put({ type: 'fetchTableData', payload: { vendorType: 16 } });
@@ -69,6 +85,7 @@ const Model = {
         case '/push_services/vivo_push':
           yield put({ type: 'fetchTableData', payload: { vendorType: 15 } });
           break;
+        default:
       }
     },
   },

@@ -227,4 +227,3 @@ export default {
   proxy: proxy[REACT_APP_ENV || 'dev'],
   chainWebpack: webpackPlugin,
 };
-
