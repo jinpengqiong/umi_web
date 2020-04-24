@@ -4,6 +4,7 @@ import { AccountLogin, getFakeCaptcha, fakeAccountLogin } from '@/services/login
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import SparkMD5 from 'spark-md5';
+
 const Model = {
   namespace: 'login',
   state: {

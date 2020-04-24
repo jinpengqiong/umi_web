@@ -35,6 +35,13 @@ export default {
         '^': '',
       },
     },
+    '/api/': {
+      target: 'https://dev-aops.symbio.com.cn:8083',
+      changeOrigin: true,
+      pathRewrite: {
+        '^': '',
+      },
+    },
   },
   test: {
     '/api/': {

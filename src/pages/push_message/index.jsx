@@ -1,19 +1,21 @@
 import React, {Component} from 'react';
 import {PageHeaderWrapper} from '@ant-design/pro-layout';
 import {connect} from 'dva';
-import {Form, Radio, Input, Button, Select, Divider} from 'antd';
+import {Form, Radio, Input, Button, Select, Divider, Modal} from 'antd';
+import SparkMD5 from 'spark-md5';
 import styles from './index.less';
 
 const {Option} = Select;
 const {TextArea} = Input;
 
+const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+
 class PushMessage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      radioValue: 1,
       contentType: null,
-      clickAction: null
+      clickAction: null,
     };
   }
 
@@ -21,16 +23,58 @@ class PushMessage extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const dispatchType = values.mode === 0 ? 'push_message/pushMessageVisitor' : 'push_message/pushMessageUser';
+        const data = ({mode, pushRange, ...rest}) => rest;
+        const newData = {...data(values), from: userInfo.userid, timestamp: new Date().getTime()};
+        const {actionUrl, bannerLargeImageUrl, targetUrl, upns} = newData;
+        if(actionUrl){
+          newData.actionUrl = SparkMD5.hash(actionUrl);
+        }
+        if(bannerLargeImageUrl){
+          newData.bannerLargeImageUrl = SparkMD5.hash(bannerLargeImageUrl);
+        }
+        if(targetUrl){
+          newData.targetUrl = SparkMD5.hash(targetUrl);
+        }
+        if(typeof upns === 'undefined'){
+          newData.upns =''
+        }
+
+        let seconds = 10;
+        let interval = null;
+        const modal = Modal.warning({
+          title: `This message shall be sent in ${seconds} seconds.`,
+          okText: 'Cancel to send',
+          onOk: () => {
+            clearInterval(interval)
+          }
+        });
+
+        interval = setInterval(() => {
+          seconds -= 1;
+          modal.update({
+            title: `This message shall be sent in ${seconds} seconds.`,
+          });
+          if (seconds === 0) {
+            clearInterval(interval);
+            modal.destroy();
+            this.props.dispatch({
+              type: dispatchType,
+              payload: newData,
+            });
+          }
+        }, 1000);
+
       }
     });
   };
 
-  changeMode = e => {
+  changeMode = () => {
+    this.props.form.resetFields();
     this.setState({
-      radioValue: e.target.value,
-    });
-    this.props.form.resetFields()
+      contentType: null,
+      clickAction: null
+    })
   };
 
   changeContentType = e => {
@@ -52,8 +96,8 @@ class PushMessage extends Component {
   };
 
   render() {
-    const {contentType, clickAction,pushRange} = this.state;
-    const {form, clientList} = this.props;
+    const {contentType, clickAction, pushRange} = this.state;
+    const {form, clientList, submitLoading} = this.props;
     const {getFieldDecorator} = form;
     const UserOption = clientList.map(v => <Option key={v.id} value={v.id}>{v.clientId}</Option>)
     const formItemLayout = {
@@ -69,56 +113,70 @@ class PushMessage extends Component {
 
     const config = {
       mode: {
-        initialValue: 1
+        initialValue: 0
       },
       title: {
-        rules: [{required: true}]
+        rules: [
+          {required: true, message: 'Title is required'},
+          {max: 40, message: 'Title cannot be longer than 40 characters'}
+        ]
       },
       content: {
-        rules: [{required: true}]
+        rules: [{required: true, message: 'Content is required'}]
       },
       contentType: {
         initialValue: 0
       },
       bannerLargeImageUrl: {
-        rules: [{required: true}]
+        rules: [
+          {required: true, message: 'Banner large image url is required'},
+          {pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*(.jpg|.png|.jpeg)$/, "g"), message: '图片URL地址错误'},
+        ]
       },
       clickAction: {
         initialValue: 1
       },
       actionUrl: {
-        rules: [{required: true}]
+        rules: [
+          {required: true, message: 'Action url is required'},
+          {pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*/, "g"), message: 'URL地址错误'}
+        ]
       },
       scheme: {
-        rules: [{required: true}]
+        rules: [{required: true, message: 'Scheme is required'}]
       },
       path: {
-        rules: [{required: true}]
+        rules: [{required: true, message: 'Path is required'}]
       },
       host: {
-        rules: [{required: true}]
+        rules: [{required: true, message: 'Host is required'}]
       },
       targetUrl: {
-        rules: [{required: true}]
+        rules: [
+          {required: true, message: 'Target url is required'},
+          {pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*/, "g"), message: 'URL地址错误'}
+        ]
       },
       pushRange: {
         initialValue: 1
       },
       upns: {
-        rules: [{required: true}]
+        rules: [{required: true, message: 'Upns is required'}]
       },
       pushChannelId: {
-        rules: [{required: true}]
+        rules: [{required: true, message: 'Push channel id is required'}],
+        initialValue: 'YOUR-CHANNEL-ID'
       },
-      client: {
-        rules: [{required: true}],
-        initialValue: clientList.length>0 && clientList[0].id
+      clientId: {
+        rules: [{required: true, message: 'Client is required'}],
+        initialValue: clientList.length > 0 && clientList[0].id
       },
       passThrough: {
         initialValue: 0
       },
       template: {
-        rules: [{required: true}]
+        rules: [{required: true, message: 'Template is required'}],
+        initialValue: 'From AOPS:'
       },
     };
 
@@ -128,14 +186,14 @@ class PushMessage extends Component {
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <Form.Item label="模式">
               {getFieldDecorator('mode', config.mode)(
-                <Radio.Group onChange={this.changeMode} value={this.state.radioValue}>
-                  <Radio value={1}>Visitor Mode</Radio>
-                  <Radio value={2}>User Mode</Radio>
+                <Radio.Group onChange={this.changeMode}>
+                  <Radio value={0}>Visitor Mode</Radio>
+                  <Radio value={1}>User Mode</Radio>
                 </Radio.Group>
               )}
             </Form.Item>
             <Divider orientation="left">推送内容</Divider>
-            <Form.Item label="Title">
+            <Form.Item label="Title" extra="Cannot be longer than 40 characters">
               {getFieldDecorator('title', config.title)(<Input maxLength={40}/>)}
             </Form.Item>
             <Form.Item label="Banner Style">
@@ -152,7 +210,7 @@ class PushMessage extends Component {
                 {getFieldDecorator('bannerLargeImageUrl', config.bannerLargeImageUrl)(<Input/>)}
               </Form.Item>
             ) : null}
-            <Form.Item label="Content">
+            <Form.Item label="Content" extra={`Cannot be longer than ${contentType === 6 ? 200 : 128} characters`}>
               {getFieldDecorator('content', config.content)(
                 <TextArea maxLength={contentType === 6 ? 200 : 128} rows={3}/>
               )}
@@ -198,11 +256,11 @@ class PushMessage extends Component {
                 </Radio.Group>
               )}
             </Form.Item>
-            {pushRange===2?(
+            {pushRange === 2 ? (
               <Form.Item label="Registration ID">
                 {getFieldDecorator('upns', config.upns)(<TextArea rows={3}/>)}
               </Form.Item>
-            ):null}
+            ) : null}
             <Form.Item label="Channel">
               {getFieldDecorator('passThrough', config.passThrough)(
                 <Radio.Group>
@@ -213,7 +271,7 @@ class PushMessage extends Component {
             </Form.Item>
             <Divider orientation="left">Others</Divider>
             <Form.Item label="Client">
-              {getFieldDecorator('client', config.client)(
+              {getFieldDecorator('clientId', config.clientId)(
                 <Select>
                   {UserOption}
                 </Select>,
@@ -226,7 +284,7 @@ class PushMessage extends Component {
               {getFieldDecorator('pushChannelId', config.pushChannelId)(<Input/>)}
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" loading={submitLoading}>
                 Submit
               </Button>
             </Form.Item>
@@ -238,4 +296,4 @@ class PushMessage extends Component {
 }
 
 const WrappedComp = Form.create({})(PushMessage);
-export default connect(({global, config}) => ({...global, ...config}))(WrappedComp);
+export default connect(({global, push_message}) => ({...global, ...push_message}))(WrappedComp);

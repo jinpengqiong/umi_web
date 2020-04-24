@@ -21,7 +21,7 @@ const Model = {
     },
   },
   effects: {
-    *fetchClientList(_, { call, put, select }) {
+    *fetchClientList(_, { call, put }) {
       const resp = yield call(getClientList, {
         passKey: userInfo.passKey,
       });
@@ -32,8 +32,7 @@ const Model = {
         });
       }
     },
-    *fetchTableData({ payload }, { call, put, select }) {
-      console.log('userInfo', userInfo);
+    *fetchTableData({ payload }, { call, put }) {
       const tableData = yield call(getConfigTable, {
         passKey: userInfo.passKey,
         vendorType: payload.vendorType,
@@ -44,9 +43,8 @@ const Model = {
           payload: { tableData: tableData.data },
         });
       }
-      console.log('fetchTableData');
     },
-    *updateTableData({ payload }, { call, put, select }) {
+    *updateTableData({ payload }, { call, put }) {
       const response = yield call(updateConfigTable, {
         passKey: userInfo.passKey,
         id: payload.id,
@@ -62,9 +60,6 @@ const Model = {
     *pathHandler({ payload }, { call, put, select }) {
       switch (payload.location.pathname) {
         case '/application/config':
-          yield put({ type: 'fetchClientList' });
-          break;
-        case '/push_message':
           yield put({ type: 'fetchClientList' });
           break;
         case '/push_services/apple_apns':

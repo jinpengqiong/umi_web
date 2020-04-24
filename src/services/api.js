@@ -18,3 +18,15 @@ export async function getClientList(params) {
     params,
   });
 }
+export async function pushMessageUser(params) {
+  return request('/api/pushMessageInUserMode', {
+    method: 'POST',
+    params,
+  });
+}
+export async function pushMessageVisitor(params) {
+  return request('/api/pushMessageInVisitorMode', {
+    method: 'POST',
+    params,
+  });
+}
