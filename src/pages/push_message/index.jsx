@@ -225,15 +225,18 @@ class PushMessage extends Component {
                 {getFieldDecorator('bannerLargeImageUrl', config.bannerLargeImageUrl)(<Input />)}
               </Form.Item>
             ) : null}
-            <Form.Item
-              label="Content"
-              extra={`Cannot be longer than ${contentType === 6 ? 128 : 50} characters`}
-            >
-              {getFieldDecorator(
-                'content',
-                config.content,
-              )(<TextArea maxLength={contentType === 6 ? 128 : 50} rows={3} />)}
-            </Form.Item>
+            {contentType === 6 ? (
+              <Form.Item label="Content" extra="Cannot be longer than 128 characters">
+                {getFieldDecorator(
+                  'content',
+                  config.content,
+                )(<TextArea maxLength={128} rows={3} />)}
+              </Form.Item>
+            ) : (
+              <Form.Item label="Content" extra="Cannot be longer than 50 characters">
+                {getFieldDecorator('content', config.content)(<TextArea maxLength={50} rows={3} />)}
+              </Form.Item>
+            )}
 
             <Divider orientation="left">基本设置</Divider>
 
