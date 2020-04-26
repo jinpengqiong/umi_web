@@ -146,7 +146,7 @@ class PushMessage extends Component {
           {required: true, message: 'Banner large image url is required'},
           {
             pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*(.jpg|.png|.jpeg)$/, 'g'),
-            message: '图片URL地址错误',
+            message: 'Invalid URL(http(s) prefix or .jpg|.png|.jpeg subfix is required).',
           },
         ],
       },
@@ -156,7 +156,7 @@ class PushMessage extends Component {
       actionUrl: {
         rules: [
           {required: true, message: 'Action url is required'},
-          {pattern: new RegExp(/(https):\/\/([\w.]+\/?)\S*/, 'g'), message: 'URL地址错误'},
+          {pattern: new RegExp(/(https):\/\/([\w.]+\/?)\S*/, 'g'), message: 'Invalid URL(https is required).'},
         ],
       },
       scheme: {
@@ -255,7 +255,7 @@ class PushMessage extends Component {
                 <Radio.Group onChange={this.changeClickAction}>
                   <Radio value={1}>Open App</Radio>
                   <Radio value={2}>Open App Internal Page</Radio>
-                  <Radio value={3}>Open Web Page</Radio>
+                  <Radio value={3}>Open Web Page(https)</Radio>
                 </Radio.Group>,
               )}
             </Form.Item>
