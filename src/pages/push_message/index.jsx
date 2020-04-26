@@ -185,7 +185,8 @@ class PushMessage extends Component {
       },
       clientId: {
         rules: [{ required: true, message: 'Client is required' }],
-        initialValue: clientList.length > 0 && clientList[0].clientId,
+        initialValue: 'ChatApp',
+        // initialValue: clientList.length > 0 && clientList[0].clientId,
       },
       passThrough: {
         initialValue: 0,
@@ -311,7 +312,12 @@ class PushMessage extends Component {
             </Form.Item>
             <Divider orientation="left">Others</Divider>
             <Form.Item label="Client">
-              {getFieldDecorator('clientId', config.clientId)(<Select>{UserOption}</Select>)}
+              {getFieldDecorator('clientId', config.clientId)(
+                <Select>
+                  <Option value="ChatApp">Suunto(UserMode)</Option>
+                  <Option value="VistorApp1">Suunto(VisitorMode)</Option>
+                </Select>
+              )}
             </Form.Item>
             <Form.Item label="Template">
               {getFieldDecorator('template', config.template)(<Input />)}
