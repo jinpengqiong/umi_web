@@ -1,4 +1,6 @@
 import { queryNotices } from '@/services/user';
+import {message} from "antd";
+
 const GlobalModel = {
   namespace: 'global',
   state: {
@@ -66,6 +68,13 @@ const GlobalModel = {
         },
       });
     },
+
+    *responseError({ payload }, { put }){
+      message.error(payload.remark);
+      if(payload.code === '20002'){
+        yield put({type: 'login/logout'})
+      }
+    }
   },
   reducers: {
     changeLayoutCollapsed(

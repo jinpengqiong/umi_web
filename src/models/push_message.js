@@ -1,4 +1,4 @@
-import {getClientList, pushMessageUser, pushMessageVisitor} from '@/services/api';
+import {pushMessageUser, pushMessageVisitor} from '@/services/api';
 import {message} from 'antd';
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -15,7 +15,7 @@ const Model = {
   //   },
   // },
   effects: {
-    * pushMessageUser({payload}, {call, put, select}) {
+    * pushMessageUser({payload}, {call, put}) {
       yield put({type: 'changeLoading', payload: true});
       const resp = yield call(pushMessageUser, {
         broadcastObject: JSON.stringify(payload),
@@ -24,11 +24,11 @@ const Model = {
       if (resp.code === '200') {
         message.success('Submit successfully!');
       } else {
-        message.error(resp.remark);
+        yield put({type: 'global/responseError', payload: resp})
       }
       yield put({type: 'changeLoading', payload: false});
     },
-    * pushMessageVisitor({payload}, {call, put, select}) {
+    * pushMessageVisitor({payload}, {call, put}) {
       yield put({type: 'changeLoading', payload: true});
       const resp = yield call(pushMessageVisitor, {
         broadcastObject: JSON.stringify(payload),
@@ -37,11 +37,11 @@ const Model = {
       if (resp.code === '200') {
         message.success('Submit successfully!');
       } else {
-        message.error(resp.remark);
+        yield put({type: 'global/responseError', payload: resp})
       }
       yield put({type: 'changeLoading', payload: false});
     },
-    * changeLoading({payload}, {call, put, select}) {
+    * changeLoading({payload}, {put}) {
       yield put({
         type: 'updateState',
         payload: {submitLoading: payload},

@@ -16,6 +16,7 @@ const Model = {
   },
   subscriptions: {
     setup({ dispatch, history }) {
+      dispatch({type: 'fetchClientList'});
       history.listen(location => {
         dispatch({ type: 'pathHandler', payload: { location } });
       });
@@ -33,8 +34,10 @@ const Model = {
       if (resp.code === '200') {
         yield put({
           type: 'updateState',
-          payload: { clientList: resp.data },
+          payload: {clientList: resp.data},
         });
+      } else {
+        yield put({type: 'global/responseError', payload: resp})
       }
       yield put({
         type: 'updateState',
@@ -46,15 +49,17 @@ const Model = {
         type: 'updateState',
         payload: { tableDataLoading: true },
       });
-      const tableData = yield call(getConfigTable, {
+      const resp = yield call(getConfigTable, {
         passKey: userInfo.passKey,
         vendorType: payload.vendorType,
       });
-      if (tableData.code === '200') {
+      if (resp.code === '200') {
         yield put({
           type: 'updateState',
-          payload: { tableData: tableData.data },
+          payload: { tableData: resp.data },
         });
+      } else {
+        yield put({type: 'global/responseError', payload: resp})
       }
       yield put({
         type: 'updateState',
@@ -62,19 +67,21 @@ const Model = {
       });
     },
     *updateTableData({ payload }, { call, put }) {
-      const response = yield call(updateConfigTable, {
+      const resp = yield call(updateConfigTable, {
         passKey: userInfo.passKey,
         id: payload.id,
         clientValue: payload.clientValue,
       });
-      if (response.code === '200') {
+      if (resp.code === '200') {
         yield put({
           type: 'pathHandler',
           payload: { location: payload.location },
         });
+      } else {
+        yield put({type: 'global/responseError', payload: resp})
       }
     },
-    *pathHandler({ payload }, { call, put, select }) {
+    *pathHandler({ payload }, { put, select }) {
       switch (payload.location.pathname) {
         case '/application/config':
           yield put({ type: 'fetchClientList' });
