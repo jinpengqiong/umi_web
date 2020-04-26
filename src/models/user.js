@@ -13,7 +13,7 @@ const UserModel = {
       });
     },
 
-    *fetchCurrent({ payload }, { call, put }) {
+    *fetchCurrent({ payload }, { put }) {
       yield put({
         type: 'saveCurrentUser',
         payload,

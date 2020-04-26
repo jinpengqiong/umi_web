@@ -16,7 +16,6 @@ const Model = {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      dispatch({type: 'fetchClientList'});
       history.listen(location => {
         dispatch({ type: 'pathHandler', payload: { location } });
       });
@@ -29,7 +28,7 @@ const Model = {
         payload: { clientListLoading: true },
       });
       const resp = yield call(getClientList, {
-        passKey: userInfo.passKey,
+        passKey: JSON.parse(sessionStorage.getItem('userInfo')).passKey,
       });
       if (resp.code === '200') {
         yield put({

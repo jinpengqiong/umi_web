@@ -8,35 +8,35 @@
 export default {
   dev: {
     '/api': {
-      target: 'http://10.147.20.180:8084',
+      target: 'https://dev-aops.symbio.com.cn:8084',
       changeOrigin: true,
       pathRewrite: {
         '^/api': '',
       },
     },
     '/permission': {
-      target: 'http://10.147.20.180:8084',
+      target: 'https://dev-aops.symbio.com.cn:8084',
       changeOrigin: true,
       pathRewrite: {
         '^': '',
       },
     },
     '/clientAppConfig/': {
-      target: 'http://10.147.20.180:8084',
+      target: 'https://dev-aops.symbio.com.cn:8084',
       changeOrigin: true,
       pathRewrite: {
         '^': '',
       },
     },
     '/clientAppInfo/': {
-      target: 'http://10.147.20.180:8084',
+      target: 'https://dev-aops.symbio.com.cn:8084',
       changeOrigin: true,
       pathRewrite: {
         '^': '',
       },
     },
     '/api/': {
-      target: 'http://10.147.20.180:8083',
+      target: 'https://dev-aops.symbio.com.cn:8083',
       changeOrigin: true,
       pathRewrite: {
         '^': '',
@@ -45,7 +45,7 @@ export default {
   },
   test: {
     '/api/': {
-      target: 'http://10.147.20.180:8084',
+      target: 'https://dev-aops.symbio.com.cn:8084',
       changeOrigin: true,
       pathRewrite: {
         '^': '',
