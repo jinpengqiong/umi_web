@@ -193,7 +193,7 @@ class PushMessage extends Component {
       <PageHeaderWrapper className={styles.main}>
         <div style={{ paddingTop: 20 }}>
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-            <Form.Item label="模式">
+            <Form.Item label="Mode">
               {getFieldDecorator(
                 'mode',
                 config.mode,
@@ -204,7 +204,7 @@ class PushMessage extends Component {
                 </Radio.Group>,
               )}
             </Form.Item>
-            <Divider orientation="left">推送内容</Divider>
+            <Divider orientation="left">Content</Divider>
             <Form.Item label="Title" extra="Cannot be longer than 40 characters">
               {getFieldDecorator('title', config.title)(<Input maxLength={40} />)}
             </Form.Item>
@@ -238,7 +238,7 @@ class PushMessage extends Component {
               </Form.Item>
             )}
 
-            <Divider orientation="left">基本设置</Divider>
+            <Divider orientation="left">Basic Settings</Divider>
 
             <Form.Item label="Notification Actions">
               {getFieldDecorator(
@@ -248,7 +248,7 @@ class PushMessage extends Component {
                 <Radio.Group onChange={this.changeClickAction}>
                   <Radio value={1}>Open App</Radio>
                   <Radio value={2}>Open App Internal Page</Radio>
-                  <Radio value={3}>Open Web Page</Radio>
+                  <Radio value={3}>Open Web Page(https)</Radio>
                 </Radio.Group>,
               )}
             </Form.Item>
@@ -273,13 +273,13 @@ class PushMessage extends Component {
                 </Form.Item>
               </React.Fragment>
             ) : null}
-            <Form.Item label="推送范围">
+            <Form.Item label="Targets">
               {getFieldDecorator(
                 'pushRange',
                 config.pushRange,
               )(
                 <Radio.Group onChange={this.changePushRange}>
-                  <Radio value={1}>全部范围</Radio>
+                  <Radio value={1}>All</Radio>
                   <Radio value={2}>Registration ID</Radio>
                 </Radio.Group>,
               )}
