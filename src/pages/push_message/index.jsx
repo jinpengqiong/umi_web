@@ -292,8 +292,8 @@ class PushMessage extends Component {
                 config.passThrough,
               )(
                 <Radio.Group>
-                  <Radio value={0}>OS Message</Radio>
-                  <Radio value={1}>Pass Through Message</Radio>
+                  <Radio value={0}>OS Message(Recommend)</Radio>
+                  <Radio value={1}>PassThrough Message(UI Customization)</Radio>
                 </Radio.Group>,
               )}
             </Form.Item>
