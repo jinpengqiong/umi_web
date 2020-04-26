@@ -230,12 +230,12 @@ class PushMessage extends Component {
             ) : null}
             <Form.Item
               label="Content"
-              extra={`Cannot be longer than ${contentType === 6 ? 200 : 128} characters`}
+              extra={`Cannot be longer than ${contentType === 6 ? 128 : 50} characters`}
             >
               {getFieldDecorator(
                 'content',
                 config.content,
-              )(<TextArea maxLength={contentType === 6 ? 200 : 128} rows={3} />)}
+              )(<TextArea maxLength={contentType === 6 ? 128 : 50} rows={3} />)}
             </Form.Item>
 
             <Divider orientation="left">基本设置</Divider>
@@ -252,7 +252,7 @@ class PushMessage extends Component {
                 </Radio.Group>,
               )}
             </Form.Item>
-            {clickAction === 2 || clickAction === 3 ? (
+            {clickAction === 3 ? (
               <Form.Item label="Action Url">
                 {getFieldDecorator('actionUrl', config.actionUrl)(<Input />)}
               </Form.Item>
