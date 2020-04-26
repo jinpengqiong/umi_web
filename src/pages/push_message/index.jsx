@@ -177,7 +177,7 @@ class PushMessage extends Component {
       },
       clientId: {
         rules: [{ required: true, message: 'Client is required' }],
-        initialValue: clientList.length > 0 && clientList[0].id,
+        initialValue: clientList.length > 0 && clientList[0].clientId,
       },
       passThrough: {
         initialValue: 0,
