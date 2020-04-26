@@ -209,6 +209,10 @@ class EditableTable extends Component {
           dataSource={this.state.data}
           columns={columns}
           rowClassName="editable-row"
+          loading={{
+            tip: 'loading...',
+            spinning: this.props.tableDataLoading
+          }}
           pagination={false}
         />
       </EditableContext.Provider>

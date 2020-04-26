@@ -5,7 +5,7 @@ import { EditableFormTable } from '../../../components/EditableCell/EditableCell
 import styles from './index.less';
 
 const FCM = props => {
-  const { tableData, dispatch } = props;
+  const { tableData, tableDataLoading, dispatch } = props;
   return (
     <PageHeaderWrapper className={styles.main}>
       <div
@@ -14,7 +14,7 @@ const FCM = props => {
           textAlign: 'center',
         }}
       >
-        <EditableFormTable tableData={tableData} dispatch={dispatch} location={props.location} />
+        <EditableFormTable tableData={tableData} tableDataLoading={tableDataLoading} dispatch={dispatch} location={props.location} />
       </div>
     </PageHeaderWrapper>
   );

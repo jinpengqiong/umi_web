@@ -17,7 +17,6 @@ const Model = {
         password: SparkMD5.hash(payload.password),
       });
       // const response = yield call(fakeAccountLogin, payload);
-      console.log('response', response);
       response.currentAuthority = 'admin';
       yield put({
         type: 'changeLoginStatus',
@@ -40,7 +39,6 @@ const Model = {
         let { redirect } = params;
         if (redirect) {
           const redirectUrlParams = new URL(redirect);
-          console.log('redirectUrlParams', redirectUrlParams);
           if (redirectUrlParams.origin === urlParams.origin) {
             redirect = redirect.substr(urlParams.origin.length);
 

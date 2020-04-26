@@ -9,23 +9,12 @@ const Model = {
     clientList: [],
     submitLoading: false,
   },
-  subscriptions: {
-    setup({dispatch, history}) {
-      dispatch({type: 'fetchClientList'});
-    },
-  },
+  // subscriptions: {
+  //   setup({dispatch, history}) {
+  //     dispatch({type: 'config/fetchClientList'});
+  //   },
+  // },
   effects: {
-    * fetchClientList(_, {call, put}) {
-      const resp = yield call(getClientList, {
-        passKey: userInfo.passKey,
-      });
-      if (resp.code === '200') {
-        yield put({
-          type: 'updateState',
-          payload: {clientList: resp.data},
-        });
-      }
-    },
     * pushMessageUser({payload}, {call, put, select}) {
       yield put({type: 'changeLoading', payload: true});
       const resp = yield call(pushMessageUser, {
@@ -60,9 +49,9 @@ const Model = {
     },
   },
   reducers: {
-    updateState(state, {payload}) {
-      return {...state, ...payload};
-    },
+    // updateState(state, {payload}) {
+    //   return {...state, ...payload};
+    // },
   },
 };
 export default Model;

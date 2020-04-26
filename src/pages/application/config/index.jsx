@@ -9,7 +9,7 @@ import styles from './index.less';
 class ConfigPage extends Component {
 
   renderTable = () => {
-    const {clientList} = this.props;
+    const {clientList, clientListLoading} = this.props;
     const columns = [
       {
         title: 'ID',
@@ -35,7 +35,7 @@ class ConfigPage extends Component {
         dataSource={clientList}
         loading={{
           tip: 'loading...',
-          spinning: false
+          spinning: clientListLoading
         }}
         pagination={false}
       />

@@ -10,18 +10,23 @@ const Model = {
   namespace: 'config',
   state: {
     tableData: null,
+    tableDataLoading: false,
     clientList: [],
+    clientListLoading: false
   },
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        console.log('location', location.pathname);
         dispatch({ type: 'pathHandler', payload: { location } });
       });
     },
   },
   effects: {
     *fetchClientList(_, { call, put }) {
+      yield put({
+        type: 'updateState',
+        payload: { clientListLoading: true },
+      });
       const resp = yield call(getClientList, {
         passKey: userInfo.passKey,
       });
@@ -31,8 +36,16 @@ const Model = {
           payload: { clientList: resp.data },
         });
       }
+      yield put({
+        type: 'updateState',
+        payload: { clientListLoading: false },
+      });
     },
     *fetchTableData({ payload }, { call, put }) {
+      yield put({
+        type: 'updateState',
+        payload: { tableDataLoading: true },
+      });
       const tableData = yield call(getConfigTable, {
         passKey: userInfo.passKey,
         vendorType: payload.vendorType,
@@ -43,6 +56,10 @@ const Model = {
           payload: { tableData: tableData.data },
         });
       }
+      yield put({
+        type: 'updateState',
+        payload: { tableDataLoading: false },
+      });
     },
     *updateTableData({ payload }, { call, put }) {
       const response = yield call(updateConfigTable, {
@@ -61,6 +78,12 @@ const Model = {
       switch (payload.location.pathname) {
         case '/application/config':
           yield put({ type: 'fetchClientList' });
+          break;
+        case '/push_message':
+          const clientList =  yield select(state => state.config.clientList);
+          if(clientList.length===0){
+            yield put({ type: 'fetchClientList' });
+          }
           break;
         case '/push_services/apple_apns':
           yield put({ type: 'fetchTableData', payload: { vendorType: 16 } });
