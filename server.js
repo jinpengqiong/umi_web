@@ -40,6 +40,15 @@ app.use(
   }),
 );
 
+app.use(
+  '/clientAppInfo/',
+  proxy({
+    target: 'http://127.0.0.1:8084',
+    changeOrigin: true,
+    xfwd: true,
+  }),
+);
+
 // 路由配置
 app.use('/', indexRouter);
 
