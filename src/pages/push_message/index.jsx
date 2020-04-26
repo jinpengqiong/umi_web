@@ -28,16 +28,13 @@ class PushMessage extends Component {
           values.mode === 0 ? 'push_message/pushMessageVisitor' : 'push_message/pushMessageUser';
         const data = ({mode, ...rest}) => rest;
         const newData = {...data(values), from: userInfo.userid, timestamp: new Date().getTime()};
-        const {actionUrl, bannerLargeImageUrl, targetUrl, upns, content} = newData;
+        const {actionUrl, bannerLargeImageUrl, upns, content} = newData;
         newData.content = Crypto.AES_CBC_PKCS5PaddingEncrypt(content);
         if (actionUrl) {
           newData.actionUrl = Crypto.AES_CBC_PKCS5PaddingEncrypt(actionUrl);
         }
         if (bannerLargeImageUrl) {
           newData.bannerLargeImageUrl = Crypto.AES_CBC_PKCS5PaddingEncrypt(bannerLargeImageUrl);
-        }
-        if (targetUrl) {
-          newData.targetUrl = Crypto.AES_CBC_PKCS5PaddingEncrypt(targetUrl);
         }
         if (typeof upns === 'undefined') {
           newData.upns = '';
