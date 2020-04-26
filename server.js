@@ -18,7 +18,7 @@ app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use(
   '/api',
   proxy({
-    target: 'http://10.147.20.180:8084',
+    target: 'http://127.0.0.1:8084',
     changeOrigin: true,
     xfwd: true,
   }),
@@ -26,7 +26,7 @@ app.use(
 app.use(
   '/permission',
   proxy({
-    target: 'http://10.147.20.180:8084',
+    target: 'http://127.0.0.1:8084',
     changeOrigin: true,
     xfwd: true,
   }),
@@ -34,7 +34,7 @@ app.use(
 app.use(
   '/clientAppConfig/',
   proxy({
-    target: 'http://10.147.20.180:8084',
+    target: 'http://127.0.0.1:8084',
     changeOrigin: true,
     xfwd: true,
   }),
