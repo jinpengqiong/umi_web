@@ -26,7 +26,8 @@ class PushMessage extends Component {
         const dispatchType = values.mode === 0 ? 'push_message/pushMessageVisitor' : 'push_message/pushMessageUser';
         const data = ({mode, pushRange, ...rest}) => rest;
         const newData = {...data(values), from: userInfo.userid, timestamp: new Date().getTime()};
-        const {actionUrl, bannerLargeImageUrl, targetUrl, upns} = newData;
+        const {actionUrl, bannerLargeImageUrl, targetUrl, upns, content} = newData;
+        newData.content = SparkMD5.hash(content);
         if(actionUrl){
           newData.actionUrl = SparkMD5.hash(actionUrl);
         }
@@ -40,7 +41,7 @@ class PushMessage extends Component {
           newData.upns =''
         }
 
-        let seconds = 10;
+        let seconds = 2;
         let interval = null;
         const modal = Modal.warning({
           title: `This message shall be sent in ${seconds} seconds.`,
@@ -99,7 +100,7 @@ class PushMessage extends Component {
     const {contentType, clickAction, pushRange} = this.state;
     const {form, clientList, submitLoading} = this.props;
     const {getFieldDecorator} = form;
-    const UserOption = clientList.map(v => <Option key={v.id} value={v.id}>{v.clientId}</Option>)
+    const UserOption = clientList.map(v => <Option key={v.id} value={v.clientId}>{v.clientId}</Option>)
     const formItemLayout = {
       labelCol: {span: 4},
       wrapperCol: {span: 12},
