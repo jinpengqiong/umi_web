@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {PageHeaderWrapper} from '@ant-design/pro-layout';
-import {connect} from 'dva';
-import {Form, Radio, Input, Button, Select, Divider, Modal} from 'antd';
-import SparkMD5 from 'spark-md5';
+import React, { Component } from 'react';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import { connect } from 'dva';
+import { Form, Radio, Input, Button, Select, Divider, Modal } from 'antd';
+import Crypto from '@/utils/crypto';
 import styles from './index.less';
 
-const {Option} = Select;
-const {TextArea} = Input;
+const { Option } = Select;
+const { TextArea } = Input;
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
@@ -23,22 +23,23 @@ class PushMessage extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const dispatchType = values.mode === 0 ? 'push_message/pushMessageVisitor' : 'push_message/pushMessageUser';
-        const data = ({mode, pushRange, ...rest}) => rest;
-        const newData = {...data(values), from: userInfo.userid, timestamp: new Date().getTime()};
-        const {actionUrl, bannerLargeImageUrl, targetUrl, upns, content} = newData;
-        newData.content = SparkMD5.hash(content);
-        if(actionUrl){
-          newData.actionUrl = SparkMD5.hash(actionUrl);
+        const dispatchType =
+          values.mode === 0 ? 'push_message/pushMessageVisitor' : 'push_message/pushMessageUser';
+        const data = ({ mode, pushRange, ...rest }) => rest;
+        const newData = { ...data(values), from: userInfo.userid, timestamp: new Date().getTime() };
+        const { actionUrl, bannerLargeImageUrl, targetUrl, upns, content } = newData;
+        newData.content = Crypto.AES_CBC_PKCS5PaddingEncrypt(content);
+        if (actionUrl) {
+          newData.actionUrl = Crypto.AES_CBC_PKCS5PaddingEncrypt(actionUrl);
         }
-        if(bannerLargeImageUrl){
-          newData.bannerLargeImageUrl = SparkMD5.hash(bannerLargeImageUrl);
+        if (bannerLargeImageUrl) {
+          newData.bannerLargeImageUrl = Crypto.AES_CBC_PKCS5PaddingEncrypt(bannerLargeImageUrl);
         }
-        if(targetUrl){
-          newData.targetUrl = SparkMD5.hash(targetUrl);
+        if (targetUrl) {
+          newData.targetUrl = Crypto.AES_CBC_PKCS5PaddingEncrypt(targetUrl);
         }
-        if(typeof upns === 'undefined'){
-          newData.upns =''
+        if (typeof upns === 'undefined') {
+          newData.upns = '';
         }
 
         let seconds = 2;
@@ -47,8 +48,8 @@ class PushMessage extends Component {
           title: `This message shall be sent in ${seconds} seconds.`,
           okText: 'Cancel to send',
           onOk: () => {
-            clearInterval(interval)
-          }
+            clearInterval(interval);
+          },
         });
 
         interval = setInterval(() => {
@@ -65,7 +66,6 @@ class PushMessage extends Component {
             });
           }
         }, 1000);
-
       }
     });
   };
@@ -74,8 +74,8 @@ class PushMessage extends Component {
     this.props.form.resetFields();
     this.setState({
       contentType: null,
-      clickAction: null
-    })
+      clickAction: null,
+    });
   };
 
   changeContentType = e => {
@@ -97,192 +97,214 @@ class PushMessage extends Component {
   };
 
   render() {
-    const {contentType, clickAction, pushRange} = this.state;
-    const {form, clientList, submitLoading} = this.props;
-    const {getFieldDecorator} = form;
-    const UserOption = clientList.map(v => <Option key={v.id} value={v.clientId}>{v.clientId}</Option>)
+    const { contentType, clickAction, pushRange } = this.state;
+    const { form, clientList, submitLoading } = this.props;
+    const { getFieldDecorator } = form;
+    const UserOption = clientList.map(v => (
+      <Option key={v.id} value={v.clientId}>
+        {v.clientId}
+      </Option>
+    ));
     const formItemLayout = {
-      labelCol: {span: 4},
-      wrapperCol: {span: 12},
+      labelCol: { span: 4 },
+      wrapperCol: { span: 12 },
     };
     const tailFormItemLayout = {
       wrapperCol: {
         span: 12,
-        offset: 4
+        offset: 4,
       },
     };
 
     const config = {
       mode: {
-        initialValue: 0
+        initialValue: 0,
       },
       title: {
         rules: [
-          {required: true, message: 'Title is required'},
-          {max: 40, message: 'Title cannot be longer than 40 characters'}
-        ]
+          { required: true, message: 'Title is required' },
+          { max: 40, message: 'Title cannot be longer than 40 characters' },
+        ],
       },
       content: {
-        rules: [{required: true, message: 'Content is required'}]
+        rules: [{ required: true, message: 'Content is required' }],
       },
       contentType: {
-        initialValue: 0
+        initialValue: 0,
       },
       bannerLargeImageUrl: {
         rules: [
-          {required: true, message: 'Banner large image url is required'},
-          {pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*(.jpg|.png|.jpeg)$/, "g"), message: '图片URL地址错误'},
-        ]
+          { required: true, message: 'Banner large image url is required' },
+          {
+            pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*(.jpg|.png|.jpeg)$/, 'g'),
+            message: '图片URL地址错误',
+          },
+        ],
       },
       clickAction: {
-        initialValue: 1
+        initialValue: 1,
       },
       actionUrl: {
         rules: [
-          {required: true, message: 'Action url is required'},
-          {pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*/, "g"), message: 'URL地址错误'}
-        ]
+          { required: true, message: 'Action url is required' },
+          { pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*/, 'g'), message: 'URL地址错误' },
+        ],
       },
       scheme: {
-        rules: [{required: true, message: 'Scheme is required'}]
+        rules: [{ required: true, message: 'Scheme is required' }],
       },
       path: {
-        rules: [{required: true, message: 'Path is required'}]
+        rules: [{ required: true, message: 'Path is required' }],
       },
       host: {
-        rules: [{required: true, message: 'Host is required'}]
+        rules: [{ required: true, message: 'Host is required' }],
       },
       targetUrl: {
         rules: [
-          {required: true, message: 'Target url is required'},
-          {pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*/, "g"), message: 'URL地址错误'}
-        ]
+          { required: true, message: 'Target url is required' },
+          { pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*/, 'g'), message: 'URL地址错误' },
+        ],
       },
       pushRange: {
-        initialValue: 1
+        initialValue: 1,
       },
       upns: {
-        rules: [{required: true, message: 'Upns is required'}]
+        rules: [{ required: true, message: 'Upns is required' }],
       },
       pushChannelId: {
-        rules: [{required: true, message: 'Push channel id is required'}],
-        initialValue: 'YOUR-CHANNEL-ID'
+        rules: [{ required: true, message: 'Push channel id is required' }],
+        initialValue: 'YOUR-CHANNEL-ID',
       },
       clientId: {
-        rules: [{required: true, message: 'Client is required'}],
-        initialValue: clientList.length > 0 && clientList[0].id
+        rules: [{ required: true, message: 'Client is required' }],
+        initialValue: clientList.length > 0 && clientList[0].id,
       },
       passThrough: {
-        initialValue: 0
+        initialValue: 0,
       },
       template: {
-        rules: [{required: true, message: 'Template is required'}],
-        initialValue: 'From AOPS:'
+        rules: [{ required: true, message: 'Template is required' }],
+        initialValue: 'From AOPS:',
       },
     };
 
     return (
       <PageHeaderWrapper className={styles.main}>
-        <div style={{paddingTop: 20}}>
+        <div style={{ paddingTop: 20 }}>
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <Form.Item label="模式">
-              {getFieldDecorator('mode', config.mode)(
+              {getFieldDecorator(
+                'mode',
+                config.mode,
+              )(
                 <Radio.Group onChange={this.changeMode}>
                   <Radio value={0}>Visitor Mode</Radio>
                   <Radio value={1}>User Mode</Radio>
-                </Radio.Group>
+                </Radio.Group>,
               )}
             </Form.Item>
             <Divider orientation="left">推送内容</Divider>
             <Form.Item label="Title" extra="Cannot be longer than 40 characters">
-              {getFieldDecorator('title', config.title)(<Input maxLength={40}/>)}
+              {getFieldDecorator('title', config.title)(<Input maxLength={40} />)}
             </Form.Item>
             <Form.Item label="Banner Style">
-              {getFieldDecorator('contentType', config.contentType)(
+              {getFieldDecorator(
+                'contentType',
+                config.contentType,
+              )(
                 <Radio.Group onChange={this.changeContentType}>
                   <Radio value={0}>Default</Radio>
                   <Radio value={1}>Card</Radio>
                   <Radio value={6}>Big Text</Radio>
-                </Radio.Group>
+                </Radio.Group>,
               )}
             </Form.Item>
             {contentType === 1 ? (
               <Form.Item label="Banner Large Image Url">
-                {getFieldDecorator('bannerLargeImageUrl', config.bannerLargeImageUrl)(<Input/>)}
+                {getFieldDecorator('bannerLargeImageUrl', config.bannerLargeImageUrl)(<Input />)}
               </Form.Item>
             ) : null}
-            <Form.Item label="Content" extra={`Cannot be longer than ${contentType === 6 ? 200 : 128} characters`}>
-              {getFieldDecorator('content', config.content)(
-                <TextArea maxLength={contentType === 6 ? 200 : 128} rows={3}/>
-              )}
+            <Form.Item
+              label="Content"
+              extra={`Cannot be longer than ${contentType === 6 ? 200 : 128} characters`}
+            >
+              {getFieldDecorator(
+                'content',
+                config.content,
+              )(<TextArea maxLength={contentType === 6 ? 200 : 128} rows={3} />)}
             </Form.Item>
 
             <Divider orientation="left">基本设置</Divider>
 
             <Form.Item label="Notification Actions">
-              {getFieldDecorator('clickAction', config.clickAction)(
+              {getFieldDecorator(
+                'clickAction',
+                config.clickAction,
+              )(
                 <Radio.Group onChange={this.changeClickAction}>
                   <Radio value={1}>Open App</Radio>
                   <Radio value={2}>Open App Internal Page</Radio>
                   <Radio value={3}>Open Web Page</Radio>
-                </Radio.Group>
+                </Radio.Group>,
               )}
             </Form.Item>
             {clickAction === 2 || clickAction === 3 ? (
               <Form.Item label="Action Url">
-                {getFieldDecorator('actionUrl', config.actionUrl)(<Input/>)}
+                {getFieldDecorator('actionUrl', config.actionUrl)(<Input />)}
               </Form.Item>
             ) : null}
             {clickAction === 2 ? (
               <React.Fragment>
                 <Form.Item label="Scheme">
-                  {getFieldDecorator('scheme', config.scheme)(<Input/>)}
+                  {getFieldDecorator('scheme', config.scheme)(<Input />)}
                 </Form.Item>
                 <Form.Item label="Path">
-                  {getFieldDecorator('path', config.path)(<Input/>)}
+                  {getFieldDecorator('path', config.path)(<Input />)}
                 </Form.Item>
                 <Form.Item label="Host">
-                  {getFieldDecorator('host', config.host)(<Input/>)}
+                  {getFieldDecorator('host', config.host)(<Input />)}
                 </Form.Item>
                 <Form.Item label="TargetUrl">
-                  {getFieldDecorator('targetUrl', config.targetUrl)(<Input/>)}
+                  {getFieldDecorator('targetUrl', config.targetUrl)(<Input />)}
                 </Form.Item>
               </React.Fragment>
             ) : null}
             <Form.Item label="推送范围">
-              {getFieldDecorator('pushRange', config.pushRange)(
+              {getFieldDecorator(
+                'pushRange',
+                config.pushRange,
+              )(
                 <Radio.Group onChange={this.changePushRange}>
                   <Radio value={1}>全部范围</Radio>
                   <Radio value={2}>Registration ID</Radio>
-                </Radio.Group>
+                </Radio.Group>,
               )}
             </Form.Item>
             {pushRange === 2 ? (
               <Form.Item label="Registration ID">
-                {getFieldDecorator('upns', config.upns)(<TextArea rows={3}/>)}
+                {getFieldDecorator('upns', config.upns)(<TextArea rows={3} />)}
               </Form.Item>
             ) : null}
             <Form.Item label="Channel">
-              {getFieldDecorator('passThrough', config.passThrough)(
+              {getFieldDecorator(
+                'passThrough',
+                config.passThrough,
+              )(
                 <Radio.Group>
                   <Radio value={0}>OS Message</Radio>
                   <Radio value={1}>Pass Through Message</Radio>
-                </Radio.Group>
+                </Radio.Group>,
               )}
             </Form.Item>
             <Divider orientation="left">Others</Divider>
             <Form.Item label="Client">
-              {getFieldDecorator('clientId', config.clientId)(
-                <Select>
-                  {UserOption}
-                </Select>,
-              )}
+              {getFieldDecorator('clientId', config.clientId)(<Select>{UserOption}</Select>)}
             </Form.Item>
             <Form.Item label="Template">
-              {getFieldDecorator('template', config.template)(<Input/>)}
+              {getFieldDecorator('template', config.template)(<Input />)}
             </Form.Item>
             <Form.Item label="Channel Id">
-              {getFieldDecorator('pushChannelId', config.pushChannelId)(<Input/>)}
+              {getFieldDecorator('pushChannelId', config.pushChannelId)(<Input />)}
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit" loading={submitLoading}>
@@ -297,4 +319,4 @@ class PushMessage extends Component {
 }
 
 const WrappedComp = Form.create({})(PushMessage);
-export default connect(({global, push_message}) => ({...global, ...push_message}))(WrappedComp);
+export default connect(({ global, push_message }) => ({ ...global, ...push_message }))(WrappedComp);
