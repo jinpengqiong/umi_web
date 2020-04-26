@@ -163,10 +163,7 @@ class PushMessage extends Component {
         initialValue: 'com.symbio.ti.aops',
       },
       targetUrl: {
-        rules: [
-          { required: true, message: 'Target url is required' },
-          { pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*/, 'g'), message: 'URL地址错误' },
-        ],
+        rules: [{ required: true, message: 'Target url is required' }],
         initialValue: 'demo.notificationlist.NotificationListActivity',
       },
       pushRange: {
@@ -268,7 +265,7 @@ class PushMessage extends Component {
                 <Form.Item label="Host">
                   {getFieldDecorator('host', config.host)(<Input disabled />)}
                 </Form.Item>
-                <Form.Item label="TargetUrl">
+                <Form.Item label="TargetUri">
                   {getFieldDecorator('targetUrl', config.targetUrl)(<Input disabled />)}
                 </Form.Item>
               </React.Fragment>
