@@ -152,18 +152,22 @@ class PushMessage extends Component {
       },
       scheme: {
         rules: [{ required: true, message: 'Scheme is required' }],
+        initialValue: 'aops',
       },
       path: {
         rules: [{ required: true, message: 'Path is required' }],
+        initialValue: 'NotificationListActivity',
       },
       host: {
         rules: [{ required: true, message: 'Host is required' }],
+        initialValue: 'com.symbio.ti.aops',
       },
       targetUrl: {
         rules: [
           { required: true, message: 'Target url is required' },
           { pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*/, 'g'), message: 'URL地址错误' },
         ],
+        initialValue: 'demo.notificationlist.NotificationListActivity',
       },
       pushRange: {
         initialValue: 1,
@@ -256,16 +260,16 @@ class PushMessage extends Component {
             {clickAction === 2 ? (
               <React.Fragment>
                 <Form.Item label="Scheme">
-                  {getFieldDecorator('scheme', config.scheme)(<Input />)}
+                  {getFieldDecorator('scheme', config.scheme)(<Input disabled />)}
                 </Form.Item>
                 <Form.Item label="Path">
-                  {getFieldDecorator('path', config.path)(<Input />)}
+                  {getFieldDecorator('path', config.path)(<Input disabled />)}
                 </Form.Item>
                 <Form.Item label="Host">
-                  {getFieldDecorator('host', config.host)(<Input />)}
+                  {getFieldDecorator('host', config.host)(<Input disabled />)}
                 </Form.Item>
                 <Form.Item label="TargetUrl">
-                  {getFieldDecorator('targetUrl', config.targetUrl)(<Input />)}
+                  {getFieldDecorator('targetUrl', config.targetUrl)(<Input disabled />)}
                 </Form.Item>
               </React.Fragment>
             ) : null}
