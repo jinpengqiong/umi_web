@@ -283,7 +283,7 @@ class PushMessage extends Component {
                 config.isPushToAll,
               )(
                 <Radio.Group onChange={this.changePushRange}>
-                  <Radio value={1}>全部范围</Radio>
+                  <Radio value={1}>All</Radio>
                   <Radio value={0}>Registration ID</Radio>
                 </Radio.Group>,
               )}
