@@ -25,7 +25,7 @@ class PushMessage extends Component {
       if (!err) {
         const dispatchType =
           values.mode === 0 ? 'push_message/pushMessageVisitor' : 'push_message/pushMessageUser';
-        const data = ({ mode, pushRange, ...rest }) => rest;
+        const data = ({ mode, ...rest }) => rest;
         const newData = { ...data(values), from: userInfo.userid, timestamp: new Date().getTime() };
         const { actionUrl, bannerLargeImageUrl, targetUrl, upns, content } = newData;
         newData.content = Crypto.AES_CBC_PKCS5PaddingEncrypt(content);
@@ -82,6 +82,7 @@ class PushMessage extends Component {
     this.setState({
       contentType: e.target.value,
     });
+    this.props.form.setFieldsValue({ content: '' });
   };
 
   changeClickAction = e => {
@@ -92,12 +93,12 @@ class PushMessage extends Component {
 
   changePushRange = e => {
     this.setState({
-      pushRange: e.target.value,
+      isPushToAll: e.target.value,
     });
   };
 
   render() {
-    const { contentType, clickAction, pushRange } = this.state;
+    const { contentType, clickAction, isPushToAll } = this.state;
     const { form, clientList, submitLoading } = this.props;
     const { getFieldDecorator } = form;
     const UserOption = clientList.map(v => (
@@ -127,7 +128,13 @@ class PushMessage extends Component {
         ],
       },
       content: {
-        rules: [{ required: true, message: 'Content is required' }],
+        rules: [
+          { required: true, message: 'Content is required' },
+          {
+            max: contentType === 6 ? 128 : 50,
+            message: `Content cannot be longer than ${contentType === 6 ? 128 : 50} characters`,
+          },
+        ],
       },
       contentType: {
         initialValue: 0,
@@ -147,7 +154,7 @@ class PushMessage extends Component {
       actionUrl: {
         rules: [
           { required: true, message: 'Action url is required' },
-          { pattern: new RegExp(/(http|https):\/\/([\w.]+\/?)\S*/, 'g'), message: 'URL地址错误' },
+          { pattern: new RegExp(/(https):\/\/([\w.]+\/?)\S*/, 'g'), message: 'URL地址错误' },
         ],
       },
       scheme: {
@@ -166,7 +173,7 @@ class PushMessage extends Component {
         rules: [{ required: true, message: 'Target url is required' }],
         initialValue: 'demo.notificationlist.NotificationListActivity',
       },
-      pushRange: {
+      isPushToAll: {
         initialValue: 1,
       },
       upns: {
@@ -225,18 +232,15 @@ class PushMessage extends Component {
                 {getFieldDecorator('bannerLargeImageUrl', config.bannerLargeImageUrl)(<Input />)}
               </Form.Item>
             ) : null}
-            {contentType === 6 ? (
-              <Form.Item label="Content" extra="Cannot be longer than 128 characters">
-                {getFieldDecorator(
-                  'content',
-                  config.content,
-                )(<TextArea maxLength={128} rows={3} />)}
-              </Form.Item>
-            ) : (
-              <Form.Item label="Content" extra="Cannot be longer than 50 characters">
-                {getFieldDecorator('content', config.content)(<TextArea maxLength={50} rows={3} />)}
-              </Form.Item>
-            )}
+            <Form.Item
+              label="Content"
+              extra={`Cannot be longer than ${contentType === 6 ? 128 : 50} characters`}
+            >
+              {getFieldDecorator(
+                'content',
+                config.content,
+              )(<TextArea maxLength={contentType === 6 ? 128 : 50} rows={3} />)}
+            </Form.Item>
 
             <Divider orientation="left">基本设置</Divider>
 
@@ -275,18 +279,23 @@ class PushMessage extends Component {
             ) : null}
             <Form.Item label="推送范围">
               {getFieldDecorator(
-                'pushRange',
-                config.pushRange,
+                'isPushToAll',
+                config.isPushToAll,
               )(
                 <Radio.Group onChange={this.changePushRange}>
                   <Radio value={1}>全部范围</Radio>
-                  <Radio value={2}>Registration ID</Radio>
+                  <Radio value={0}>Registration ID</Radio>
                 </Radio.Group>,
               )}
             </Form.Item>
-            {pushRange === 2 ? (
+            {isPushToAll === 0 ? (
               <Form.Item label="Registration ID">
-                {getFieldDecorator('upns', config.upns)(<TextArea rows={3} />)}
+                {getFieldDecorator(
+                  'upns',
+                  config.upns,
+                )(
+                  <TextArea rows={3} placeholder="Maximum 500 targets and separate with commas." />,
+                )}
               </Form.Item>
             ) : null}
             <Form.Item label="Channel">
@@ -308,7 +317,7 @@ class PushMessage extends Component {
               {getFieldDecorator('template', config.template)(<Input />)}
             </Form.Item>
             <Form.Item label="Channel Id">
-              {getFieldDecorator('pushChannelId', config.pushChannelId)(<Input />)}
+              {getFieldDecorator('pushChannelId', config.pushChannelId)(<Input disabled />)}
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit" loading={submitLoading}>
