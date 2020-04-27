@@ -184,7 +184,7 @@ class PushMessage extends Component {
       },
       clientId: {
         rules: [{required: true, message: 'Client is required'}],
-        initialValue: mode === 0 ? 'VistorApp1' : 'ChatApp',
+        initialValue: mode === 0 ? 'VisitorApp1' : 'ChatApp',
         // initialValue: clientList.length > 0 && clientList[0].clientId,
       },
       passThrough: {
@@ -314,7 +314,7 @@ class PushMessage extends Component {
               {getFieldDecorator('clientId', config.clientId)(
                 <Select>
                   {mode === 0 ? (
-                    <Option value="VistorApp1">Suunto(VisitorMode)</Option>
+                    <Option value="VisitorApp1">Suunto(VisitorMode)</Option>
                   ) : (
                     <Option value="ChatApp">Suunto(UserMode)</Option>
                   )}
