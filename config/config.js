@@ -68,6 +68,7 @@ const plugins = [
 
 export default {
   plugins,
+  exportStatic: {},
   hash: true,
   targets: {
     ie: 11,
@@ -122,11 +123,10 @@ export default {
               authority: ['admin'],
               routes: [
                 {
-                  path: '/push_services/apple_apns',
                   name: 'APNS',
                   icon: 'crown',
-                  component: './push_service/Apple_APNS',
-                  authority: ['admin'],
+                  path: '/push_services/apple_apns',
+                  component: './push_service/apple_apns',
                 },
                 {
                   name: 'FCM',
@@ -144,19 +144,19 @@ export default {
                   name: 'XiaoMi Push',
                   icon: 'crown',
                   path: '/push_services/xiaomi_push',
-                  component: './push_service/Xiaomi_Push',
+                  component: './push_service/xiaomi_push',
                 },
                 {
                   name: 'OPPO Push',
                   icon: 'crown',
                   path: '/push_services/opop_push',
-                  component: './push_service/OPOP_Push',
+                  component: './push_service/opop_push',
                 },
                 {
                   name: 'Vivo Push',
                   icon: 'crown',
                   path: '/push_services/vivo_push',
-                  component: './push_service/Vivo_Push',
+                  component: './push_service/vivo_push',
                 },
               ],
             },
