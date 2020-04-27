@@ -119,7 +119,7 @@ export default {
               path: '/push_services',
               name: 'Push Vendors',
               icon: 'crown',
-              component: './push_service/Apple_APNS',
+              component: './push_service/apple_apns',
               authority: ['admin'],
               routes: [
                 {
@@ -164,7 +164,7 @@ export default {
               name: 'Messaging',
               icon: 'crown',
               path: '/push_message',
-              component: './Push_Message',
+              component: './push_message',
               authority: ['admin'],
             },
             {
