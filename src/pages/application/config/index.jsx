@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'dva';
 import {PageHeaderWrapper} from '@ant-design/pro-layout';
-import {FormattedMessage} from 'umi-plugin-react/locale';
-import {Table, Divider, Tag, Spin} from 'antd';
+import {Table} from 'antd';
 import styles from './index.less';
 
 
 class ConfigPage extends Component {
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'clients/fetchClientList',
+    });
+  }
 
   renderTable = () => {
     const {clientList, clientListLoading} = this.props;
@@ -60,4 +64,4 @@ class ConfigPage extends Component {
   }
 };
 
-export default connect(({config}) => ({...config}))(ConfigPage);
+export default connect(({clients}) => ({...clients}))(ConfigPage);

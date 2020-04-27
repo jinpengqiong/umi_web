@@ -1,18 +1,12 @@
-import { stringify } from 'querystring';
-import { router } from 'umi';
-import { getConfigTable, updateConfigTable, getClientList } from '@/services/api';
-import { setAuthority } from '@/utils/authority';
-import { getPageQuery } from '@/utils/utils';
+import { getConfigTable, updateConfigTable } from '@/services/api';
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
 const Model = {
-  namespace: 'config',
+  namespace: 'push_service',
   state: {
     tableData: null,
-    tableDataLoading: false,
-    clientList: [],
-    clientListLoading: false
+    tableDataLoading: false
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -22,27 +16,6 @@ const Model = {
     },
   },
   effects: {
-    *fetchClientList(_, { call, put }) {
-      yield put({
-        type: 'updateState',
-        payload: { clientListLoading: true },
-      });
-      const resp = yield call(getClientList, {
-        passKey: JSON.parse(sessionStorage.getItem('userInfo')).passKey,
-      });
-      if (resp.code === '200') {
-        yield put({
-          type: 'updateState',
-          payload: {clientList: resp.data},
-        });
-      } else {
-        yield put({type: 'global/responseError', payload: resp})
-      }
-      yield put({
-        type: 'updateState',
-        payload: { clientListLoading: false },
-      });
-    },
     *fetchTableData({ payload }, { call, put }) {
       yield put({
         type: 'updateState',
@@ -80,17 +53,8 @@ const Model = {
         yield put({type: 'global/responseError', payload: resp})
       }
     },
-    *pathHandler({ payload }, { put, select }) {
+    *pathHandler({ payload }, { call, put, select }) {
       switch (payload.location.pathname) {
-        case '/application/config':
-          yield put({ type: 'fetchClientList' });
-          break;
-        case '/push_message':
-          const clientList =  yield select(state => state.config.clientList);
-          if(clientList.length===0){
-            yield put({ type: 'fetchClientList' });
-          }
-          break;
         case '/push_services/apple_apns':
           yield put({ type: 'fetchTableData', payload: { vendorType: 16 } });
           break;
@@ -116,7 +80,7 @@ const Model = {
   reducers: {
     updateState(state, { payload }) {
       return { ...state, ...payload };
-    },
+    }
   },
 };
 export default Model;

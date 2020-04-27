@@ -19,4 +19,4 @@ const OPOPPush = props => {
     </PageHeaderWrapper>
   );
 };
-export default connect(({ config }) => ({ ...config }))(OPOPPush);
+export default connect(({ push_service }) => ({ ...push_service }))(OPOPPush);

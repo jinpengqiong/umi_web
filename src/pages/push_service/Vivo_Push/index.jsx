@@ -19,4 +19,4 @@ const VIVOPush = props => {
     </PageHeaderWrapper>
   );
 };
-export default connect(({ config }) => ({ ...config }))(VIVOPush);
+export default connect(({ push_service }) => ({ ...push_service }))(VIVOPush);
