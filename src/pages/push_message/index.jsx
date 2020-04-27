@@ -184,7 +184,7 @@ class PushMessage extends Component {
       },
       clientId: {
         rules: [{required: true, message: 'Client is required'}],
-        initialValue: mode === 0 ? 'VistorApp1' : 'ChatApp',
+        initialValue: mode === 0 ? 'VisitorApp1' : 'ChatApp',
         // initialValue: clientList.length > 0 && clientList[0].clientId,
       },
       passThrough: {
@@ -222,7 +222,7 @@ class PushMessage extends Component {
               )(
                 <Radio.Group onChange={this.changeContentType}>
                   <Radio value={0}>Default</Radio>
-                  <Radio value={1}>Card</Radio>
+                  <Radio value={1}>Card(NA on Vivo and OPPO)</Radio>
                   <Radio value={6}>Big Text</Radio>
                 </Radio.Group>,
               )}
@@ -250,8 +250,8 @@ class PushMessage extends Component {
                 config.clickAction,
               )(
                 <Radio.Group onChange={this.changeClickAction}>
-                  <Radio value={1}>Open App</Radio>
-                  <Radio value={2}>Open App Internal Page</Radio>
+                  <Radio value={1}>Launch App</Radio>
+                  <Radio value={2}>Open In-App Page</Radio>
                   <Radio value={3}>Open Web Page(https)</Radio>
                 </Radio.Group>,
               )}
@@ -305,7 +305,7 @@ class PushMessage extends Component {
               )(
                 <Radio.Group>
                   <Radio value={0}>OS Message(Recommend)</Radio>
-                  <Radio value={1}>PassThrough Message(UI Customization)</Radio>
+                  <Radio value={1}>PassThrough Message(Unstable or NA once app terminated. But be able to custom UI in app side.)</Radio>
                 </Radio.Group>,
               )}
             </Form.Item>
@@ -314,7 +314,7 @@ class PushMessage extends Component {
               {getFieldDecorator('clientId', config.clientId)(
                 <Select>
                   {mode === 0 ? (
-                    <Option value="VistorApp1">Suunto(VisitorMode)</Option>
+                    <Option value="VisitorApp1">Suunto(VisitorMode)</Option>
                   ) : (
                     <Option value="ChatApp">Suunto(UserMode)</Option>
                   )}
