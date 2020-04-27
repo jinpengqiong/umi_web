@@ -47,6 +47,15 @@ app.use(
     xfwd: true,
   }),
 );
+app.use(
+  '/api/',
+  proxy({
+    target: 'http://52.201.31.131:8083',
+    changeOrigin: true,
+    xfwd: true,
+  }),
+);
+
 
 
 // 路由配置
