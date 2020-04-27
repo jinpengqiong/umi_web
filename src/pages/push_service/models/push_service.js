@@ -55,22 +55,22 @@ const Model = {
     },
     *pathHandler({ payload }, { call, put, select }) {
       switch (payload.location.pathname) {
-        case '/push_service/apple_apns':
+        case '/push_services/apple_apns':
           yield put({ type: 'fetchTableData', payload: { vendorType: 16 } });
           break;
-        case '/push_service/google_fcm':
+        case '/push_services/google_fcm':
           yield put({ type: 'fetchTableData', payload: { vendorType: 11 } });
           break;
-        case '/push_service/huawei_hms':
+        case '/push_services/huawei_hms':
           yield put({ type: 'fetchTableData', payload: { vendorType: 13 } });
           break;
-        case '/push_service/xiaomi_push':
+        case '/push_services/xiaomi_push':
           yield put({ type: 'fetchTableData', payload: { vendorType: 12 } });
           break;
-        case '/push_service/opop_push':
+        case '/push_services/opop_push':
           yield put({ type: 'fetchTableData', payload: { vendorType: 14 } });
           break;
-        case '/push_service/vivo_push':
+        case '/push_services/vivo_push':
           yield put({ type: 'fetchTableData', payload: { vendorType: 15 } });
           break;
         default:
