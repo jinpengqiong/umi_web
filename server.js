@@ -18,7 +18,7 @@ app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use(
   '/api',
   proxy({
-    target: 'http://52.201.31.131:8084',
+    target: 'http://52.201.31.131:8083',
     changeOrigin: true,
     xfwd: true,
   }),
@@ -47,14 +47,7 @@ app.use(
     xfwd: true,
   }),
 );
-app.use(
-  '/api/',
-  proxy({
-    target: 'http://52.201.31.131:8083',
-    changeOrigin: true,
-    xfwd: true,
-  }),
-);
+
 
 // 路由配置
 app.use('/', indexRouter);

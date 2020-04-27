@@ -8,7 +8,7 @@
 export default {
   dev: {
     '/api': {
-      target: 'http://52.201.31.131:8084',
+      target: 'http://52.201.31.131:8083',
       changeOrigin: true,
       pathRewrite: {
         '^/api': '',
@@ -35,16 +35,9 @@ export default {
         '^': '',
       },
     },
-    '/api/': {
-      target: 'http://52.201.31.131:8083',
-      changeOrigin: true,
-      pathRewrite: {
-        '^': '',
-      },
-    },
   },
   test: {
-    '/api/': {
+    '/api': {
       target: 'http://52.201.31.131:8084',
       changeOrigin: true,
       pathRewrite: {
