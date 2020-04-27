@@ -122,11 +122,10 @@ export default {
               authority: ['admin'],
               routes: [
                 {
-                  path: '/push_services/apple_apns',
                   name: 'APNS',
                   icon: 'crown',
-                  component: './push_service/Apple_APNS',
-                  authority: ['admin'],
+                  path: '/push_services/apple_apns',
+                  component: './push_service/apple_apns',
                 },
                 {
                   name: 'FCM',
@@ -144,19 +143,19 @@ export default {
                   name: 'XiaoMi Push',
                   icon: 'crown',
                   path: '/push_services/xiaomi_push',
-                  component: './push_service/Xiaomi_Push',
+                  component: './push_service/xiaomi_push',
                 },
                 {
                   name: 'OPPO Push',
                   icon: 'crown',
                   path: '/push_services/opop_push',
-                  component: './push_service/OPOP_Push',
+                  component: './push_service/opop_push',
                 },
                 {
                   name: 'Vivo Push',
                   icon: 'crown',
                   path: '/push_services/vivo_push',
-                  component: './push_service/Vivo_Push',
+                  component: './push_service/vivo_push',
                 },
               ],
             },
@@ -213,8 +212,8 @@ export default {
         const antdProPath = match[1].replace('.less', '');
         const arr = slash(antdProPath)
           .split('/')
-          .map(a => a.replace(/([A-Z])/g, '-$1'))
-          .map(a => a.toLowerCase());
+          .map((a) => a.replace(/([A-Z])/g, '-$1'))
+          .map((a) => a.toLowerCase());
         return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-');
       }
 
