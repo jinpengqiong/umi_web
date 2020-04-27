@@ -4,7 +4,9 @@ import React from 'react';
 import { connect } from 'dva';
 import { router } from 'umi';
 import HeaderDropdown from '../HeaderDropdown';
-import styles from './index.less';
+import styles from './index.less'
+import headSrc from "../../assets/ic_default_avatar.png";
+
 
 class AvatarDropdown extends React.Component {
   onMenuClick = event => {
@@ -64,7 +66,7 @@ class AvatarDropdown extends React.Component {
           <Avatar
             size="small"
             className={styles.avatar}
-            src={currentUser.avatar}
+            src={headSrc}
             alt="avatar" />
           <span className={styles.name}>{currentUser.name}</span>
         </span>

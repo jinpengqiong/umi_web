@@ -24,9 +24,9 @@ const Model = {
       }); // Login successfully
       if (response.code === '200') {
         const userInfo = {
-          name: 'Admin',
-          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-          userid: '00000001',
+          name: payload.userName,
+          // avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          // userid: '00000001',
           passKey: response.passKey,
         };
         yield put({
