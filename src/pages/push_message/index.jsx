@@ -250,8 +250,8 @@ class PushMessage extends Component {
                 config.clickAction,
               )(
                 <Radio.Group onChange={this.changeClickAction}>
-                  <Radio value={1}>Open App</Radio>
-                  <Radio value={2}>Open App Internal Page</Radio>
+                  <Radio value={1}>Launch App</Radio>
+                  <Radio value={2}>Open In-App Page</Radio>
                   <Radio value={3}>Open Web Page(https)</Radio>
                 </Radio.Group>,
               )}
@@ -305,7 +305,7 @@ class PushMessage extends Component {
               )(
                 <Radio.Group>
                   <Radio value={0}>OS Message(Recommend)</Radio>
-                  <Radio value={1}>PassThrough Message(Unstable or NA once app terminated. But be able to custom UI.)</Radio>
+                  <Radio value={1}>PassThrough Message(Unstable or NA once app terminated. But be able to custom UI in app side.)</Radio>
                 </Radio.Group>,
               )}
             </Form.Item>
