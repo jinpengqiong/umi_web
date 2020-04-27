@@ -26,7 +26,7 @@ const Model = {
         const userInfo = {
           name: payload.userName,
           // avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-          // userid: '00000001',
+          userid: '00000001',
           passKey: response.passKey,
         };
         yield put({
