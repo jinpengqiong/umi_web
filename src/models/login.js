@@ -52,6 +52,8 @@ const Model = {
         }
 
         router.replace(redirect || '/');
+      } else {
+        yield put({type: 'global/responseError', payload: response})
       }
     },
 

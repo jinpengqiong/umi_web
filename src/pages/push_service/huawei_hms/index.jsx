@@ -19,4 +19,4 @@ const HMS = props => {
     </PageHeaderWrapper>
   );
 };
-export default connect(({ config }) => ({ ...config }))(HMS);
+export default connect(({ push_service }) => ({ ...push_service }))(HMS);

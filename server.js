@@ -7,8 +7,8 @@ const indexRouter = require('./src/services/router');
 // const config = require('./server/config');
 app.use(compression());
 
-// 模板配置
-// app.set('views', path.join(__dirname, 'views'));
+//模板配置
+// app.set('views', path.join(__dirname, '/src/'));
 // app.set('view engine', 'ejs');
 
 // 静态资源配置
@@ -18,7 +18,7 @@ app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use(
   '/api',
   proxy({
-    target: 'http://127.0.0.1:8084',
+    target: 'http://52.201.31.131:8084',
     changeOrigin: true,
     xfwd: true,
   }),
@@ -26,7 +26,7 @@ app.use(
 app.use(
   '/permission',
   proxy({
-    target: 'http://127.0.0.1:8084',
+    target: 'http://52.201.31.131:8084',
     changeOrigin: true,
     xfwd: true,
   }),
@@ -34,7 +34,7 @@ app.use(
 app.use(
   '/clientAppConfig/',
   proxy({
-    target: 'http://127.0.0.1:8084',
+    target: 'http://52.201.31.131:8084',
     changeOrigin: true,
     xfwd: true,
   }),
@@ -43,7 +43,7 @@ app.use(
 app.use(
   '/clientAppInfo/',
   proxy({
-    target: 'http://127.0.0.1:8084',
+    target: 'http://52.201.31.131:8084',
     changeOrigin: true,
     xfwd: true,
   }),

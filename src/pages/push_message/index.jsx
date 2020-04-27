@@ -340,4 +340,4 @@ class PushMessage extends Component {
 }
 
 const WrappedComp = Form.create({})(PushMessage);
-export default connect(({global, push_message}) => ({...global, ...push_message}))(WrappedComp);
+export default connect(({push_message}) => ({...push_message}))(WrappedComp);

@@ -9,11 +9,6 @@ const Model = {
     clientList: [],
     submitLoading: false,
   },
-  // subscriptions: {
-  //   setup({dispatch, history}) {
-  //     dispatch({type: 'config/fetchClientList'});
-  //   },
-  // },
   effects: {
     * pushMessageUser({payload}, {call, put}) {
       yield put({type: 'changeLoading', payload: true});
@@ -47,11 +42,6 @@ const Model = {
         payload: {submitLoading: payload},
       });
     },
-  },
-  reducers: {
-    // updateState(state, {payload}) {
-    //   return {...state, ...payload};
-    // },
-  },
+  }
 };
 export default Model;

@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { EditableFormTable } from '../../../components/EditableCell/EditableCell';
 import styles from './index.less';
 
-const XIAOMIPush = props => {
+const XIAOMIPush = (props) => {
   const { tableData, tableDataLoading, dispatch } = props;
   return (
     <PageHeaderWrapper className={styles.main}>
@@ -14,9 +14,14 @@ const XIAOMIPush = props => {
           textAlign: 'center',
         }}
       >
-        <EditableFormTable tableData={tableData} tableDataLoading={tableDataLoading} dispatch={dispatch} location={props.location} />
+        <EditableFormTable
+          tableData={tableData}
+          tableDataLoading={tableDataLoading}
+          dispatch={dispatch}
+          location={props.location}
+        />
       </div>
     </PageHeaderWrapper>
   );
 };
-export default connect(({ config }) => ({ ...config }))(XIAOMIPush);
+export default connect(({ push_service }) => ({ ...push_service }))(XIAOMIPush);
