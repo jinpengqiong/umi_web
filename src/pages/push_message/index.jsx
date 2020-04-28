@@ -190,7 +190,7 @@ class PushMessage extends Component {
       passThrough: {
         initialValue: 0,
       },
-      template: {
+      vivoTemplate: {
         rules: [{required: true, message: 'Template is required'}],
         initialValue: 'From AOPS:',
       },
@@ -322,7 +322,7 @@ class PushMessage extends Component {
               )}
             </Form.Item>
             <Form.Item label="Template">
-              {getFieldDecorator('template', config.template)(<Input/>)}
+              {getFieldDecorator('vivoTemplate', config.vivoTemplate)(<Input/>)}
             </Form.Item>
             <Form.Item label="Channel Id">
               {getFieldDecorator('pushChannelId', config.pushChannelId)(<Input disabled/>)}
