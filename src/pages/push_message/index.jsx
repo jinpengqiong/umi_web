@@ -222,7 +222,7 @@ class PushMessage extends Component {
               )(
                 <Radio.Group onChange={this.changeContentType}>
                   <Radio value={0}>Default</Radio>
-                  <Radio value={1}>Card(NA on Vivo and OPPO)</Radio>
+                  <Radio value={1}>Card(Available on Xiaomi and Huawei)</Radio>
                   <Radio value={6}>Big Text</Radio>
                 </Radio.Group>,
               )}
@@ -304,8 +304,8 @@ class PushMessage extends Component {
                 config.passThrough,
               )(
                 <Radio.Group>
-                  <Radio value={0}>OS Message(Recommend)</Radio>
-                  <Radio value={1}>PassThrough Message(Unstable or NA once app terminated. But be able to custom UI in app side.)</Radio>
+                  <Radio value={0}>OS Message(Recommended)</Radio>
+                  <Radio value={1}>PassThrough Message(N/A once app is terminated and customize your UI in app side)</Radio>
                 </Radio.Group>,
               )}
             </Form.Item>
