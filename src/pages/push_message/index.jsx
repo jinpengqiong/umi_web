@@ -27,7 +27,7 @@ class PushMessage extends Component {
         const dispatchType =
           values.mode === 0 ? 'push_message/pushMessageVisitor' : 'push_message/pushMessageUser';
         const data = ({mode, ...rest}) => rest;
-        const newData = {...data(values), from: userInfo.userid, timestamp: new Date().getTime()};
+        const newData = {...data(values), from: userInfo.name, timestamp: new Date().getTime()};
         const {actionUrl, bannerLargeImageUrl, upns, content} = newData;
         newData.content = Crypto.AES_CBC_PKCS5PaddingEncrypt(content);
         if (actionUrl) {
