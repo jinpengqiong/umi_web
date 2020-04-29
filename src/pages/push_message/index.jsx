@@ -217,7 +217,7 @@ class PushMessage extends Component {
               )}
             </Form.Item>
             <Divider orientation="left">Content</Divider>
-            <Form.Item label="Title" extra="Cannot be longer than 40 characters and and do not use simple emoji, numbers">
+            <Form.Item label="Title" extra="Cannot be longer than 40 characters and do not use simple emoji, numbers">
               {getFieldDecorator('title', config.title)(<Input maxLength={40}/>)}
             </Form.Item>
             <Form.Item label="Banner Style">
