@@ -328,7 +328,7 @@ class PushMessage extends Component {
             <Form.Item label="Template" extra="Cannot be longer than 15 characters">
               {getFieldDecorator('vivoTemplate', config.vivoTemplate)(<Input maxLength={15}/>)}
             </Form.Item>
-            <Form.Item label="Channel Id">
+            <Form.Item label="Channel Id" extra="Create the channel from mobile SDK">
               {getFieldDecorator('pushChannelId', config.pushChannelId)(<Input disabled/>)}
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
