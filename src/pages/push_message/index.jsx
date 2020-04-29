@@ -192,7 +192,10 @@ class PushMessage extends Component {
         initialValue: 0,
       },
       vivoTemplate: {
-        rules: [{required: true, message: 'Template is required'}],
+        rules: [
+          {required: true, message: 'Template is required'},
+          {max: 15, message: 'Template cannot be longer than 15 characters'},
+          ],
         initialValue: 'From AOPS:',
       },
     };
@@ -322,8 +325,8 @@ class PushMessage extends Component {
                 </Select>
               )}
             </Form.Item>
-            <Form.Item label="Template">
-              {getFieldDecorator('vivoTemplate', config.vivoTemplate)(<Input/>)}
+            <Form.Item label="Template" extra="Cannot be longer than 15 characters">
+              {getFieldDecorator('vivoTemplate', config.vivoTemplate)(<Input maxLength={15}/>)}
             </Form.Item>
             <Form.Item label="Channel Id">
               {getFieldDecorator('pushChannelId', config.pushChannelId)(<Input disabled/>)}
