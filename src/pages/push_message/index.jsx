@@ -277,7 +277,7 @@ class PushMessage extends Component {
                 <Form.Item label="Host">
                   {getFieldDecorator('host', config.host)(<Input disabled/>)}
                 </Form.Item>
-                <Form.Item label="TargetUri">
+                <Form.Item label="TargetUri" extra='Ask help from your engineer team'>
                   {getFieldDecorator('targetUrl', config.targetUrl)(<Input disabled/>)}
                 </Form.Item>
               </React.Fragment>
@@ -329,7 +329,7 @@ class PushMessage extends Component {
             <Form.Item label="Template" extra="Cannot be longer than 15 characters">
               {getFieldDecorator('vivoTemplate', config.vivoTemplate)(<Input maxLength={15}/>)}
             </Form.Item>
-            <Form.Item label="Channel Id" extra="Create the channel from mobile SDK">
+            <Form.Item label="Channel Id" extra="Create the channel in mobile SDK and ask help from your engineer team">
               {getFieldDecorator('pushChannelId', config.pushChannelId)(<Input disabled/>)}
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>

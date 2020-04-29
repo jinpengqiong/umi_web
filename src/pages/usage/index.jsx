@@ -88,7 +88,7 @@ class PushMessage extends Component {
         <Divider orientation="left" className={styles.dividerMt}>FAQ</Divider>
         <div className={styles.contentWrapper}>
           <p>Vivo doesn’t allow to deliver simple emoji, numbers messages. And we fill the template to bypass the limitation on Vivo.</p>
-          <p>The app probably can not received message if the user doesn't open this app in 30 days or OS upgrade.</p>
+          <p>The app probably can not received message if the user doesn't open this app in 30~90 days or OS upgrade.</p>
         </div>
       </PageHeaderWrapper>
     );
