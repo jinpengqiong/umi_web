@@ -119,7 +119,7 @@ export default {
               path: '/push_services',
               name: 'Vendors Certificates',
               icon: 'crown',
-              component: './push_service/apple_apns',
+              // component: './push_service/apple_apns',
               authority: ['admin'],
               routes: [
                 {

@@ -54,6 +54,7 @@ const Model = {
       }
     },
     *pathHandler({ payload }, { call, put, select }) {
+      console.log('pathname', payload.location.pathname);
       switch (payload.location.pathname) {
         case '/push_services/apple_apns':
           yield put({ type: 'fetchTableData', payload: { vendorType: 16 } });

@@ -6,8 +6,9 @@ import styles from './index.less';
 
 class APNS extends Component {
   componentDidMount() {
+    console.log('APNS componentDidMount');
     this.props.dispatch({
-      type: 'config/fetchTableData',
+      type: 'push_service/fetchTableData',
       payload: { vendorType: 16 }
     });
   }

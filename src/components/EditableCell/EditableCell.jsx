@@ -163,11 +163,11 @@ class EditableTable extends Component {
       }
 
       this.props.dispatch({
-        type: 'config/updateTableData',
+        type: 'push_service/updateTableData',
         payload: {
           clientValue: newData[key].clientValue,
           id: newData[key].id,
-          location:this.props.location
+          location: this.props.location,
         },
       });
     });
