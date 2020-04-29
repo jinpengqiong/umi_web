@@ -19,7 +19,6 @@ class APNS extends Component {
       <PageHeaderWrapper className={styles.main}>
         <div
           style={{
-            paddingTop: 20,
             textAlign: 'center',
           }}
         >

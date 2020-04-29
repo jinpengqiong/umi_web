@@ -51,8 +51,7 @@ class ConfigPage extends Component {
       <PageHeaderWrapper className={styles.main}>
         <div
           style={{
-            textAlign: 'center',
-            paddingTop: 20,
+            textAlign: 'center'
           }}
         >
           <div>

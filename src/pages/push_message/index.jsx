@@ -17,6 +17,7 @@ class PushMessage extends Component {
       mode: 0,
       contentType: null,
       clickAction: null,
+      isPushToAll: null
     };
   }
 
@@ -75,6 +76,7 @@ class PushMessage extends Component {
       mode: e.target.value,
       contentType: null,
       clickAction: null,
+      isPushToAll: null
     });
   };
 
@@ -186,7 +188,6 @@ class PushMessage extends Component {
       clientId: {
         rules: [{required: true, message: 'Client is required'}],
         initialValue: mode === 0 ? 'VisitorApp1' : 'ChatApp',
-        // initialValue: clientList.length > 0 && clientList[0].clientId,
       },
       passThrough: {
         initialValue: 0,
@@ -202,7 +203,7 @@ class PushMessage extends Component {
 
     return (
       <PageHeaderWrapper className={styles.main}>
-        <div style={{paddingTop: 20}}>
+        <div>
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <Form.Item label="Mode">
               {getFieldDecorator(

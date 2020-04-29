@@ -75,6 +75,7 @@ export default {
   },
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
+
     {
       path: '/user',
       component: '../layouts/UserLayout',
@@ -97,7 +98,14 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/application/config',
+              redirect: '/usage',
+            },
+            {
+              name: 'Notices before Usage',
+              icon: 'crown',
+              path: '/usage',
+              component: './usage',
+              authority: ['admin'],
             },
             {
               path: '/application',
