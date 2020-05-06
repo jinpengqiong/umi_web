@@ -52,6 +52,8 @@ const Model = {
         }
 
         router.replace(redirect || '/');
+
+        yield put({type: 'clients/fetchClientList'})
       } else {
         yield put({type: 'global/responseError', payload: response})
       }

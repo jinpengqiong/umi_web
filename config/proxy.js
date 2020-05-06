@@ -42,6 +42,13 @@ export default {
         '^': '',
       },
     },
+    '/topic/': {
+      target: 'http://52.201.31.131:8083',
+      changeOrigin: true,
+      pathRewrite: {
+        '^': '',
+      },
+    },
   },
   test: {
     '/api': {

@@ -169,6 +169,13 @@ export default {
               ],
             },
             {
+              name: 'Topic',
+              icon: 'crown',
+              path: '/topic',
+              component: './topic',
+              authority: ['admin'],
+            },
+            {
               name: 'Messaging',
               icon: 'crown',
               path: '/push_message',

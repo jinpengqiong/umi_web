@@ -1,23 +1,25 @@
 import request from '@/utils/request';
 
-export async function getConfigTable(params) {
+export const getConfigTable = params => {
   return request('/clientAppConfig/getConfig', {
     method: 'POST',
     params,
   });
-}
-export async function updateConfigTable(params) {
+};
+
+export const updateConfigTable = params => {
   return request('/clientAppConfig/updateConfig', {
     method: 'POST',
     params,
   });
-}
-export async function getClientList(params) {
+};
+
+export const getClientList = params => {
   return request('/clientAppInfo/getAllInfo', {
     method: 'POST',
     params,
   });
-}
+};
 
 export const pushMessageUser = params => {
   return request('/api/pushMessageInUserMode', {
@@ -25,15 +27,32 @@ export const pushMessageUser = params => {
     params,
   });
 };
-// export async function pushMessageUser(params) {
-//   return request('/api/pushMessageInUserMode', {
-//     method: 'POST',
-//     params,
-//   });
-// }
-export async function pushMessageVisitor(params) {
+
+export const pushMessageVisitor = params => {
   return request('/api/pushMessageInVisitorMode', {
     method: 'POST',
     params,
   });
-}
+};
+
+export const getTopicList = params => {
+  return request('/topic/selectTopicListByClientId', {
+    method: 'POST',
+    params,
+  });
+};
+
+export const createTopic = params => {
+  return request('/topic/createTopic', {
+    method: 'POST',
+    params,
+  });
+};
+
+export const removeTopic = params => {
+  return request('/topic/removTopic', {
+    method: 'POST',
+    params,
+  });
+};
+

@@ -20,6 +20,8 @@ const Model = {
           type: 'updateState',
           payload: {clientList: resp.data},
         });
+
+        sessionStorage.setItem('clientList', JSON.stringify(resp.data));
       } else {
         yield put({type: 'global/responseError', payload: resp})
       }

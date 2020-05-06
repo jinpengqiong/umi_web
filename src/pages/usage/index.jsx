@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {PageHeaderWrapper} from '@ant-design/pro-layout';
-import {connect} from 'dva';
 import {Table, Divider} from 'antd';
 import styles from './index.less';
 import messageImg from "../../assets/message_deliveries_paths.png";
 import {ChannelTypeDataSource, QuotaDataSource} from '../../utils/constant';
 
 
-class PushMessage extends Component {
+class Usage extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -95,4 +94,4 @@ class PushMessage extends Component {
   }
 }
 
-export default connect(({push_message}) => ({...push_message}))(PushMessage);
+export default Usage;
