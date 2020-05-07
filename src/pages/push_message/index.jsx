@@ -21,6 +21,12 @@ class PushMessage extends Component {
     };
   }
 
+  componentDidMount() {
+    // this.props.dispatch({
+    //   type: 'push_message/getTopicList',
+    // })
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -101,7 +107,7 @@ class PushMessage extends Component {
 
   render() {
     const {contentType, clickAction, isPushToAll, mode} = this.state;
-    const {form, clientList, submitLoading} = this.props;
+    const {form, clientList, submitLoading, topicList} = this.props;
     const {getFieldDecorator} = form;
     const UserOption = clientList.map(v => (
       <Option key={v.id} value={v.clientId}>
@@ -181,6 +187,9 @@ class PushMessage extends Component {
       upns: {
         rules: [{required: true, message: 'Upns is required'}],
       },
+      topic: {
+        rules: [{required: true, message: 'Topic is required'}],
+      },
       pushChannelId: {
         rules: [{required: true, message: 'Push channel id is required'}],
         initialValue: 'YOUR-CHANNEL-ID',
@@ -200,6 +209,11 @@ class PushMessage extends Component {
         initialValue: 'From AOPS:',
       },
     };
+
+    const children = [];
+    for (let i = 10; i < 36; i++) {
+      children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+    }
 
     return (
       <PageHeaderWrapper className={styles.main}>
@@ -283,31 +297,32 @@ class PushMessage extends Component {
               </React.Fragment>
             ) : null}
             <Form.Item label="Targets">
-              {getFieldDecorator(
-                'isPushToAll',
-                config.isPushToAll,
-              )(
+              {getFieldDecorator('isPushToAll', config.isPushToAll)(
                 <Radio.Group onChange={this.changePushRange}>
                   <Radio value={1}>All</Radio>
                   <Radio value={0}>Registration ID</Radio>
-                </Radio.Group>,
+                  <Radio value={2}>Topics</Radio>
+                </Radio.Group>
               )}
             </Form.Item>
             {isPushToAll === 0 ? (
               <Form.Item label="Registration ID">
-                {getFieldDecorator(
-                  'upns',
-                  config.upns,
-                )(
-                  <TextArea rows={3} placeholder="Maximum 500 targets and separate with commas."/>,
+                {getFieldDecorator('upns', config.upns)(
+                  <TextArea rows={3} placeholder="Maximum 500 targets and separate with commas."/>
+                )}
+              </Form.Item>
+            ) : null}
+            {isPushToAll === 2 ? (
+              <Form.Item label="Topics">
+                {getFieldDecorator('topic', config.topic)(
+                  <Select mode="tags" style={{ width: '100%' }}>
+                    {children}
+                  </Select>
                 )}
               </Form.Item>
             ) : null}
             <Form.Item label="Channel">
-              {getFieldDecorator(
-                'passThrough',
-                config.passThrough,
-              )(
+              {getFieldDecorator('passThrough',config.passThrough)(
                 <Radio.Group>
                   <Radio value={0}>OS Message(Recommended)</Radio>
                   <Radio value={1}>PassThrough Message(N/A once app is terminated and customize your UI in app side)</Radio>
