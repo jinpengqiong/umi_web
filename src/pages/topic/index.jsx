@@ -60,7 +60,7 @@ class Topic extends Component {
       {
         title: 'Create Time',
         dataIndex: 'createTime',
-        render: text => moment(text).format('YYYY/MM/DD hh:mm:ss')
+        render: text => moment(text).format('YYYY/MM/DD HH:mm:ss')
       },
       {
         title: '',

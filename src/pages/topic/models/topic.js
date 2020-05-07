@@ -50,6 +50,8 @@ const Model = {
           type: 'updateState',
           payload: {topicList: resp.data},
         });
+      } else {
+        yield put({type: 'global/responseError', payload: resp})
       }
     },
     * createTopic({payload}, {call, put, select}) {
@@ -65,6 +67,8 @@ const Model = {
       if (resp.code === '200') {
         yield put({type: 'topic/changeVisible', payload: false,});
         yield put({type: 'topic/getTopicList'});
+      } else {
+        yield put({type: 'global/responseError', payload: resp})
       }
     },
     * removeTopic({payload}, {call, put, select}) {
@@ -79,6 +83,8 @@ const Model = {
 
       if (resp.code === '200') {
         yield put({type: 'topic/getTopicList'});
+      } else {
+        yield put({type: 'global/responseError', payload: resp})
       }
     },
   },
