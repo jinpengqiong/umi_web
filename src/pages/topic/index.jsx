@@ -97,9 +97,12 @@ class Topic extends Component {
       <PageHeaderWrapper className={styles.main}>
         <div className={styles.toolWrapper}>
           {clientList.length > 0 && (
-            <Select defaultValue={clientId} style={{width: 120}} onChange={this.onChangeClient}>
-              {clientOption}
-            </Select>
+            <div>
+              <span style={{marginRight:'10px'}}>Client:</span>
+              <Select defaultValue={clientId} style={{width: 120}} onChange={this.onChangeClient}>
+                {clientOption}
+              </Select>
+            </div>
           )}
 
           <Button type="primary" onClick={this.openModel}>New Topic</Button>

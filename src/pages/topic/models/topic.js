@@ -44,7 +44,6 @@ const Model = {
         payload: {topicListLoading: false},
       });
 
-      // const mockData = {"code":"200","remark":"Succeed.","data":[{"id":1,"topic":"test1","clientId":"VisitorApp1","createTime":1588238742969,"deleteFlag":0}]};
       if (resp.code === '200') {
         yield put({
           type: 'updateState',

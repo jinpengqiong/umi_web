@@ -9,6 +9,7 @@ const {Option} = Select;
 const {TextArea} = Input;
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+const clientList = JSON.parse(sessionStorage.getItem('clientList'));
 
 class PushMessage extends Component {
   constructor(props) {
@@ -22,17 +23,17 @@ class PushMessage extends Component {
   }
 
   componentDidMount() {
-    // this.props.dispatch({
-    //   type: 'push_message/getTopicList',
-    // })
+    this.props.dispatch({
+      type: 'push_message/getTopicList',
+      payload: clientList[0].clientId
+    })
   }
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const dispatchType =
-          values.mode === 0 ? 'push_message/pushMessageVisitor' : 'push_message/pushMessageUser';
+        let dispatchType = values.mode === 0 ? 'push_message/pushMessageVisitor' : 'push_message/pushMessageUser';
         const data = ({mode, ...rest}) => rest;
         const newData = {...data(values), from: userInfo.name, timestamp: new Date().getTime()};
         const {actionUrl, bannerLargeImageUrl, upns, content, title} = newData;
@@ -46,6 +47,12 @@ class PushMessage extends Component {
         }
         if (typeof upns === 'undefined') {
           newData.upns = '';
+        }
+
+        // push message in topic
+        if(values.isPushToAll === 2){
+          dispatchType = 'push_message/pushMessageInTopic';
+          newData.topics = newData.topics.join();
         }
 
         let seconds = 2;
@@ -105,13 +112,25 @@ class PushMessage extends Component {
     });
   };
 
+  changeClientId = value => {
+    this.setState({
+      isPushToAll: 1,
+    });
+    this.props.form.setFieldsValue({isPushToAll: 1});
+    this.props.dispatch({
+      type: 'push_message/getTopicList',
+      payload: value
+    })
+  };
+
   render() {
     const {contentType, clickAction, isPushToAll, mode} = this.state;
-    const {form, clientList, submitLoading, topicList} = this.props;
+    const {form, submitLoading, topicList} = this.props;
     const {getFieldDecorator} = form;
-    const UserOption = clientList.map(v => (
-      <Option key={v.id} value={v.clientId}>
-        {v.clientId}
+    const clientOption = clientList.map(v=><Option key={v.id} value={v.clientId}>{v.clientId}</Option>);
+    const topicOption = topicList.map(v=>(
+      <Option key={v.id} value={v.topic}>
+        {v.topic}
       </Option>
     ));
     const formItemLayout = {
@@ -187,7 +206,7 @@ class PushMessage extends Component {
       upns: {
         rules: [{required: true, message: 'Upns is required'}],
       },
-      topic: {
+      topics: {
         rules: [{required: true, message: 'Topic is required'}],
       },
       pushChannelId: {
@@ -209,11 +228,6 @@ class PushMessage extends Component {
         initialValue: 'From AOPS:',
       },
     };
-
-    const children = [];
-    for (let i = 10; i < 36; i++) {
-      children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-    }
 
     return (
       <PageHeaderWrapper className={styles.main}>
@@ -296,6 +310,18 @@ class PushMessage extends Component {
                 </Form.Item>
               </React.Fragment>
             ) : null}
+            <Form.Item label="Client">
+              {getFieldDecorator('clientId', config.clientId)(
+                <Select onChange={this.changeClientId}>
+                  {clientOption}
+                  {/*{mode === 0 ? (*/}
+                  {/*  <Option value="VisitorApp1">Suunto(VisitorMode)</Option>*/}
+                  {/*) : (*/}
+                  {/*  <Option value="ChatApp">Suunto(UserMode)</Option>*/}
+                  {/*)}*/}
+                </Select>
+              )}
+            </Form.Item>
             <Form.Item label="Targets">
               {getFieldDecorator('isPushToAll', config.isPushToAll)(
                 <Radio.Group onChange={this.changePushRange}>
@@ -314,9 +340,9 @@ class PushMessage extends Component {
             ) : null}
             {isPushToAll === 2 ? (
               <Form.Item label="Topics">
-                {getFieldDecorator('topic', config.topic)(
+                {getFieldDecorator('topics', config.topics)(
                   <Select mode="tags" style={{ width: '100%' }}>
-                    {children}
+                    {topicOption}
                   </Select>
                 )}
               </Form.Item>
@@ -330,17 +356,7 @@ class PushMessage extends Component {
               )}
             </Form.Item>
             <Divider orientation="left">Others</Divider>
-            <Form.Item label="Client">
-              {getFieldDecorator('clientId', config.clientId)(
-                <Select>
-                  {mode === 0 ? (
-                    <Option value="VisitorApp1">Suunto(VisitorMode)</Option>
-                  ) : (
-                    <Option value="ChatApp">Suunto(UserMode)</Option>
-                  )}
-                </Select>
-              )}
-            </Form.Item>
+
             <Form.Item label="Template" extra="Cannot be longer than 15 characters">
               {getFieldDecorator('vivoTemplate', config.vivoTemplate)(<Input maxLength={15}/>)}
             </Form.Item>

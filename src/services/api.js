@@ -35,22 +35,29 @@ export const pushMessageVisitor = params => {
   });
 };
 
+export const pushMessageInTopic = params => {
+  return request('/api/pushMessageInTopic', {
+    method: 'POST',
+    params,
+  });
+};
+
 export const getTopicList = params => {
-  return request('/topic/selectTopicListByClientId', {
+  return request('/topic/getTopicsByClientId', {
     method: 'POST',
     params,
   });
 };
 
 export const createTopic = params => {
-  return request('/topic/createTopic', {
+  return request('/topic/add', {
     method: 'POST',
     params,
   });
 };
 
 export const removeTopic = params => {
-  return request('/topic/removTopic', {
+  return request('/topic/remove', {
     method: 'POST',
     params,
   });
