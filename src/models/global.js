@@ -70,9 +70,11 @@ const GlobalModel = {
     },
 
     *responseError({ payload }, { put }){
-      message.error(payload.remark);
-      if(payload.code === '20002'){
-        yield put({type: 'login/logout'})
+      if(payload.ok){
+        message.error(payload.remark);
+        if(payload.code === '20002'){
+          yield put({type: 'login/logout'})
+        }
       }
     }
   },

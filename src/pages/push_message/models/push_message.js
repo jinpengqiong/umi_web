@@ -8,7 +8,8 @@ const Model = {
   state: {
     clientList: [],
     submitLoading: false,
-    topicList: []
+    topicList: [],
+    loadingTopics: false
   },
   effects: {
     * pushMessageUser({payload}, {call, put}) {
@@ -51,6 +52,8 @@ const Model = {
       yield put({type: 'changeLoading', payload: false});
     },
     * getTopicList({payload}, {call, put}) {
+      yield put({type: 'changeLoadingTopic', payload: true});
+      yield put({ type: 'updateState', payload: {topicList: []}});
       const resp = yield call(getTopicList, {
         clientId: payload,
         passKey: userInfo.passKey,
@@ -61,12 +64,21 @@ const Model = {
           type: 'updateState',
           payload: {topicList: resp.data},
         });
+      } else {
+        yield put({type: 'global/responseError', payload: resp})
       }
+      yield put({type: 'changeLoadingTopic', payload: false});
     },
     * changeLoading({payload}, {put}) {
       yield put({
         type: 'updateState',
         payload: {submitLoading: payload},
+      });
+    },
+    * changeLoadingTopic({payload}, {put}) {
+      yield put({
+        type: 'updateState',
+        payload: {loadingTopics: payload},
       });
     },
   },

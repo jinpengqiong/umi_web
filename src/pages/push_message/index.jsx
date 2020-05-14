@@ -91,6 +91,10 @@ class PushMessage extends Component {
       clickAction: null,
       isPushToAll: null
     });
+    this.props.dispatch({
+      type: 'push_message/getTopicList',
+      payload: clientList[0].clientId
+    })
   };
 
   changeContentType = e => {
@@ -125,7 +129,7 @@ class PushMessage extends Component {
 
   render() {
     const {contentType, clickAction, isPushToAll, mode} = this.state;
-    const {form, submitLoading, topicList} = this.props;
+    const {form, submitLoading, topicList, loadingTopics} = this.props;
     const {getFieldDecorator} = form;
     const clientOption = clientList.map(v=><Option key={v.id} value={v.clientId}>{v.clientId}</Option>);
     const topicOption = topicList.map(v=>(
@@ -215,7 +219,7 @@ class PushMessage extends Component {
       },
       clientId: {
         rules: [{required: true, message: 'Client is required'}],
-        initialValue: mode === 0 ? 'VisitorApp1' : 'ChatApp',
+        initialValue: clientList[0].clientId
       },
       passThrough: {
         initialValue: 0,
@@ -341,7 +345,7 @@ class PushMessage extends Component {
             {isPushToAll === 2 ? (
               <Form.Item label="Topics">
                 {getFieldDecorator('topics', config.topics)(
-                  <Select mode="tags" style={{ width: '100%' }}>
+                  <Select mode="tags" style={{ width: '100%' }} loading={loadingTopics}>
                     {topicOption}
                   </Select>
                 )}
