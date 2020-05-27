@@ -94,8 +94,8 @@ class Usage extends Component {
           {this.renderQuotaTable()}
         </div>
         <div className={styles.contentWrapper}>
-          <p>To get unlimited quota for IM scenario, you could send mail to Xiaomi, Vivo and OPPO to request special channel or message type.</p>
-          <p>No significant workload on code.</p>
+          <p>To get unlimited quota for IM scenario, you could send mail to Xiaomi, Vivo and OPPO(NU > 300K) to request special channel or message type.</p>
+          <p>No significant code workload and request-feedback in 1 ~ 1.5 week.</p>
         </div>
 
         <Divider orientation="left" className={styles.dividerMt}>FAQ</Divider>
