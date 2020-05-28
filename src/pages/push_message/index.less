@@ -4,3 +4,29 @@
   width: 100wh;
   background: @component-background;
 }
+
+.listWrapper{
+  display: flex;
+  align-items: center;
+
+  .listGroup{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 50px;
+    margin-right: 10px;
+    background: rgb(217, 217, 217);
+    div{
+      color: #fff;
+      line-height: normal;
+    }
+    &.warning{
+      background: rgb(255, 77, 79);
+    }
+    &.good{
+      background: #b7eb8f;
+    }
+  }
+}

@@ -51,6 +51,7 @@
     "dva": "^2.6.0-beta.16",
     "express": "^4.16.2",
     "http-proxy-middleware": "^0.17.4",
+    "js-sha256": "^0.9.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "omit.js": "^1.0.2",

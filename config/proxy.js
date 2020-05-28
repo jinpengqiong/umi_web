@@ -8,42 +8,63 @@
 export default {
   dev: {
     '/api': {
-      target: 'http://10.147.20.180:8083',
+      target: 'http://52.201.31.131:8083',
       changeOrigin: true,
       pathRewrite: {
         '^/api': '',
       },
     },
     '/permission': {
-      target: 'http://10.147.20.180:8084',
+      target: 'http://52.201.31.131:8084',
       changeOrigin: true,
       pathRewrite: {
         '^': '',
       },
     },
     '/clientAppConfig/': {
-      target: 'http://10.147.20.180:8084',
+      target: 'http://52.201.31.131:8084',
       changeOrigin: true,
       pathRewrite: {
         '^': '',
       },
     },
     '/clientAppInfo/': {
-      target: 'http://10.147.20.180:8084',
+      target: 'http://52.201.31.131:8084',
       changeOrigin: true,
       pathRewrite: {
         '^': '',
       },
     },
     '/api/': {
-      target: 'http://10.147.20.180:8083',
+      target: 'http://52.201.31.131:8083',
       changeOrigin: true,
       pathRewrite: {
         '^': '',
       },
     },
     '/topic/': {
-      target: 'http://10.147.20.180:8083',
+      target: 'http://52.201.31.131:8083',
+      changeOrigin: true,
+      pathRewrite: {
+        '^': '',
+      },
+    },
+    '/v1/trace/quota/get': {
+      target: 'https://api.xmpush.xiaomi.com',
+      changeOrigin: true,
+      pathRewrite: {
+        '^': '',
+      },
+    },
+    '/server/v1/feedback/fetch_push_permit': {
+      target: 'https://feedback.push.oppomobile.com/',
+      changeOrigin: true,
+      pathRewrite: {
+        '^': '',
+      },
+    },
+    '/server/v1/auth': {
+      target: 'https://feedback.push.oppomobile.com/',
       changeOrigin: true,
       pathRewrite: {
         '^': '',
@@ -52,7 +73,7 @@ export default {
   },
   test: {
     '/api': {
-      target: 'http://10.147.20.180:8084',
+      target: 'http://52.201.31.131:8084',
       changeOrigin: true,
       pathRewrite: {
         '^': '',

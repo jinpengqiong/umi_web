@@ -26,7 +26,19 @@ class PushMessage extends Component {
     this.props.dispatch({
       type: 'push_message/getTopicList',
       payload: clientList[0].clientId
+    });
+
+    this.props.dispatch({
+      type: 'push_message/getXiaoMiApi',
+      payload: clientList[0].clientId
+    });
+
+    this.props.dispatch({
+      type: 'push_message/getOppoApi',
+      payload: clientList[0].clientId
     })
+
+
   }
 
   handleSubmit = e => {
@@ -124,12 +136,18 @@ class PushMessage extends Component {
     this.props.dispatch({
       type: 'push_message/getTopicList',
       payload: value
+    });
+
+    this.props.dispatch({
+      type: 'push_message/getXiaoMiApi',
+      payload: value
     })
+
   };
 
   render() {
     const {contentType, clickAction, isPushToAll, mode} = this.state;
-    const {form, submitLoading, topicList, loadingTopics} = this.props;
+    const {form, submitLoading, topicList, loadingTopics, xiaoMiData, oppoData} = this.props;
     const {getFieldDecorator} = form;
     const clientOption = clientList.map(v=><Option key={v.id} value={v.clientId}>{v.clientId}</Option>);
     const topicOption = topicList.map(v=>(
@@ -367,6 +385,32 @@ class PushMessage extends Component {
             <Form.Item label="Channel Id" extra="Create the channel in mobile SDK and ask help from your engineer team">
               {getFieldDecorator('pushChannelId', config.pushChannelId)(<Input disabled/>)}
             </Form.Item>
+
+
+            <Divider orientation="left">余额</Divider>
+            <Form.Item label="推送额度余量">
+              <div className={styles.listWrapper}>
+                <div className={`${styles.listGroup} ${styles.warning}`}>
+                  <div>小米</div>
+                  <div>{xiaoMiData.day_acked}次 - {xiaoMiData.day_quota}次</div>
+                </div>
+                <div className={styles.listGroup}>
+                  <div>OPPO剩余</div>
+                  <div>{oppoData.remain_count}次</div>
+                </div>
+                <div className={`${styles.listGroup} ${styles.good}`}>
+                  <div>华为</div>
+                  <div>无限制</div>
+                </div>
+                <div className={styles.listGroup}>
+                  <div>Vivo</div>
+                  <div>详情(URL)</div>
+                </div>
+              </div>
+            </Form.Item>
+
+
+
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit" loading={submitLoading}>
                 Submit
