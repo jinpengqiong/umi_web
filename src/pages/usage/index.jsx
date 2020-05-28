@@ -69,7 +69,17 @@ class Usage extends Component {
 
     return (
       <PageHeaderWrapper className={styles.main}>
-        <Divider orientation="left">Understand Each Message Deliveries Paths</Divider>
+        <Divider orientation="left" className={styles.dividerMt}>Terminology</Divider>
+        <div className={styles.contentWrapper}>
+          <p>"Always Online Push Service" is short as AOPS.</p>
+          <p>Always Online equals "using push notification technology once the app is terminated(Offline) or using real-time socket technology once the app is in the foreground(Online)", and the user always receives messages no matter he or she online or offline.</p>
+          <p>User mode is designed to import and validate your users through your identity system via AOPS middle tier or app.</p>
+          <p>Visitor mode is designed in those scenarios.</p>
+          <p>1)Login is not required.</p>
+          <p>2)The process for importing and validating your users through your identity system is handled via yourself backend or pre-prepared when you start integrating AOPS SDK.</p>
+        </div>
+
+        <Divider orientation="left">Understand Message Deliveries Paths</Divider>
         <div className={styles.contentWrapper}>
           <img className={styles.messageImg} src={messageImg} alt=""/>
         </div>
@@ -79,15 +89,20 @@ class Usage extends Component {
           {this.renderChannelTypeTable()}
         </div>
 
-        <Divider orientation="left" className={styles.dividerMt}>Understand the Quota on each Vendor Channel</Divider>
+        <Divider orientation="left" className={styles.dividerMt}>Understand Quota Limitation on each Vendor Channel</Divider>
         <div className={styles.contentWrapper}>
           {this.renderQuotaTable()}
+        </div>
+        <div className={styles.contentWrapper}>
+          <p>To get unlimited quota for IM scenario, you could send mail to Xiaomi, Vivo and OPPO(NU > 300K) to request special channel or message type.</p>
+          <p>No significant code workload and request-feedback in 1 ~ 1.5 week.</p>
         </div>
 
         <Divider orientation="left" className={styles.dividerMt}>FAQ</Divider>
         <div className={styles.contentWrapper}>
-          <p>Vivo doesn’t allow to deliver simple emoji, numbers messages. And we fill the template to bypass the limitation on Vivo.</p>
-          <p>The app probably can not received message if the user doesn't open this app in 30~90 days or OS upgrade.</p>
+          <p>Important!!!. Submit your app to Vivo and OPPO store at first, then you have the qualification to request (prod) push permission.</p>
+          <p>Vivo doesn’t allow to deliver simple emoji, numbers messages. So we design a template to bypass the limitation on Vivo.</p>
+          <p>The app probably can not receive message due to invalid registration Id. i.e.,user does not open this app in 30~90 days or OS upgrade.</p>
         </div>
       </PageHeaderWrapper>
     );

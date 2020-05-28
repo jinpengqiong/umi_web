@@ -31,8 +31,8 @@ export const QuotaDataSource = [
   {
     type: 'Huawei',
     baseNAU: 'N/A',
-    baseQutoa: 'N/A',
-    advancedQutoa: 'N/A'
+    baseQutoa: 'Unlimited',
+    advancedQutoa: 'Unlimited'
   },
   {
     type: 'OPPO',
@@ -47,7 +47,7 @@ export const QuotaDataSource = [
     advancedQutoa: 'NAU'
   },
   {
-    type: 'Unknown',
+    type: 'Undefine',
     baseNAU: '10000',
     baseQutoa: '50000',
     advancedQutoa: 'NAU*5'

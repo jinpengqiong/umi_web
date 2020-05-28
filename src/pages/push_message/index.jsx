@@ -373,7 +373,7 @@ class PushMessage extends Component {
               {getFieldDecorator('passThrough',config.passThrough)(
                 <Radio.Group>
                   <Radio value={0}>OS Message(Recommended)</Radio>
-                  <Radio value={1}>PassThrough Message(N/A once app is terminated and customize your UI in app side)</Radio>
+                  <Radio value={1}>PassThrough Message(Available on Xiaomi and Huawei;N/A once app is terminated;Customize UI in app side.)</Radio>
                 </Radio.Group>,
               )}
             </Form.Item>
